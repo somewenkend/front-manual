@@ -1,0 +1,205 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <div class="row">
+        <div class="col-md-4">
+            <div id="dataLine" style="height:400px;"></div>
+        </div>
+    </div>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;div class="row"&gt;
+        &lt;div class="col-md-4"&gt;
+            &lt;div id="dataLine" style="height:400px;"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    <label style="color: #e66b6b;">提示：div一定要设置高度，要不然图表不会显示</label>
+</pre>
+<label class="title f18">三、引入js文件</label> 
+<pre>
+    <label style="color: #e66b6b;">4.8版本</label>
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/echarts4.8/echarts.min.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+    
+    <label style="color: #e66b6b;">5.1版本</label>
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/charts/echarts5.1.1/echarts.min.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+</pre>
+<label class="title f18">四、用法（参考网站：<a target="_blank" href="http://www.echartsjs.com/option.html#title">http://www.echartsjs.com/option.html#title</a>）</label> 
+<pre>
+    // ECharts对象初始化
+    var dataLine; 
+    dataLine = echarts.init($("#dataLine")[0]); // 参数是dom对象
+    // 清除图表
+    dataLine.clear();
+    // 加载图表
+    dataLine.setOption({
+        title: { // 图表名字
+            text: '统计图'
+        },
+        tooltip: { // 信息提示框（随鼠标移动）
+            trigger: 'axis'
+        },
+        toolbox: { // 工具区
+            feature: {
+                dataView: {readOnly: true} // 切换为只读数据表视图
+            }
+        },
+        legend: { // 图例
+            data:['第一战队','第二战队']
+        },
+        grid: { // 图表的位置
+            left: '4%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true // 包含坐标轴上标签
+        },
+        xAxis: { // 横轴配置
+            type: 'category', // 坐标轴类型。category: 类目轴; value: 数值连续轴
+            data: ['周一','周二','周三','周四','周五','周六','周日']
+        },
+        yAxis: { // 纵轴配置
+            type: 'value'
+        },
+        series: [ // 数据列表
+            {
+                name:'第一战队',
+                type:'bar', // 数据表示类型。line: 折线图; bar: 柱状图
+                stack: '总量',
+                data:[120, 132, 101, 134, 90, 230, 210],
+                itemStyle: {
+                    color: "#727cf5",
+                    borderWidth: 3,
+                    barBorderRadius: [10, 10, 0, 0]
+                }
+            },
+            {
+                name:'第二战队',
+                type:'line',
+                stack: '总量',
+                data:[220, 182, 191, 234, 290, 330, 310],
+                lineStyle: {
+                    color: "#727cf5" ,
+                    width: 4,
+                    shadowColor: 'rgba(0, 0, 0, 0.4)',
+                    shadowBlur: 15,
+                    shadowOffsetY:6
+                },
+                itemStyle: {
+                    color: "#727cf5",
+                    borderWidth: 3
+                }
+            }
+        ],
+        animationEasing: 'elasticOut',
+        animationDelayUpdate: function (idx) {
+            return idx * 5;
+        }
+    });
+    
+    /**
+     * 图表自适应
+     */
+    $(window).resize(function(){
+        dataLine.resize();
+    });
+</pre>
+<script type="text/javascript" src="/plugIn/echarts4.8/echarts.min.js"></script>
+<script>
+    /*<![CDATA[*/
+    // ECharts对象初始化
+    var dataLine; 
+    dataLine = echarts.init($("#dataLine")[0]); // 参数是dom对象
+    // 清除图表
+    dataLine.clear();
+    // 加载图表
+    dataLine.setOption({
+        title: { // 图表名字
+            text: '统计图'
+        },
+        tooltip: { // 信息提示框（随鼠标移动）
+            trigger: 'axis'
+        },
+        toolbox: { // 工具区
+            feature: {
+                dataView: {readOnly: true} // 切换为只读数据表视图
+            }
+        },
+        legend: { // 图例
+            data:['第一战队','第二战队']
+        },
+        grid: { // 图表的位置
+            left: '4%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true // 包含坐标轴上标签
+        },
+        xAxis: { // 横轴配置
+            type: 'category', // 坐标轴类型。category: 类目轴; value: 数值连续轴
+            data: ['周一','周二','周三','周四','周五','周六','周日']
+        },
+        yAxis: { // 纵轴配置
+            type: 'value'
+        },
+        series: [ // 数据列表
+            {
+                name:'第一战队',
+                type:'bar', // 数据表示类型。line: 折线图; bar: 柱状图
+                stack: '总量',
+                data:[120, 132, 101, 134, 90, 230, 210],
+                symbolSize:10,
+                smooth: true,
+                hoverAnimation:false,
+                areaStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(114, 124, 245,0.1)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(114, 124, 245,0)'
+                        }])
+                },
+                itemStyle: {
+                    color: "#727cf5",
+                    borderWidth: 3,
+                    barBorderRadius: [10, 10, 0, 0]
+                }
+            },
+            {
+                name:'第二战队',
+                type:'line',
+                stack: '总量',
+                data:[220, 182, 191, 234, 290, 330, 310],
+                symbolSize:10,
+                smooth: true,
+                hoverAnimation:false,
+                lineStyle: {
+                    color: "#727cf5" ,
+                    width: 4,
+                    shadowColor: 'rgba(0, 0, 0, 0.4)',
+                    shadowBlur: 15,
+                    shadowOffsetY:6
+                },
+                itemStyle: {
+                    color: "#727cf5",
+                    borderWidth: 3
+                }
+            }
+        ],
+        animationEasing: 'elasticOut',
+        animationDelayUpdate: function (idx) {
+            return idx * 5;
+        }
+    });
+    
+    setTimeout(function() {
+        dataLine.resize();
+    }, 100);
+    
+    /**
+     * 图表自适应
+     */
+    $(window).resize(function(){
+        dataLine.resize();
+    });
+    /*]]>*/
+</script>

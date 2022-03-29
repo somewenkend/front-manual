@@ -1,0 +1,83 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <div class="table-responsive" style="background-color: #fff;">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>产品</th> <th>确认版</th> <th>签批版</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>哈他印花瑜伽服</td> <td>100</td> <td>201</td>
+                </tr>
+                <tr>
+                    <td>灵动瑜伽裤</td> <td>110</td> <td>101</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="pagesBox"></div>
+    </div>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;div class="table-responsive"&gt;
+        &lt;table class="table table-bordered table-hover table-striped mb0"&gt;
+            &lt;thead&gt;
+                &lt;tr&gt;
+                    &lt;th&gt;产品&lt;/th&gt; &lt;th&gt;确认版&lt;/th&gt; &lt;th&gt;签批版&lt;/th&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;哈他印花瑜伽服&lt;/td&gt; &lt;td&gt;100&lt;/td&gt; &lt;td&gt;201&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;灵动瑜伽裤&lt;/td&gt; &lt;td&gt;110&lt;/td&gt; &lt;td&gt;101&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;div id="pagesBox"&gt;&lt;/div&gt;
+</pre>
+<label class="title f18">三、JS代码</label> 
+<pre>
+    laypage({
+        cont: "pagesBox", // dom的id
+        pages: 10, // 总页数
+        curr: 1, // 当前页
+        jump: function(e, first){ //触发分页后的回调
+            if(!first){ //一定要加此判断，否则初始时会无限刷新
+                // 当前所选页
+                rowNum = e.curr;
+                // 在此请求所选页数据
+            }
+        },
+        skip: true, //是否开启跳页
+        skin: '#1caf9a', //加载内置皮肤，也可以直接赋值16进制颜色值，如:#c00
+        groups: 7, //连续显示分页数
+        prev: false,
+        next: false
+    });
+</pre>
+<script>
+    /*<![CDATA[*/
+    laypage({
+        cont: "pagesBox", // dom的id
+        pages: 10, // 总页数
+        curr: 1, // 当前页
+        jump: function(e, first){ //触发分页后的回调
+            if(!first){ //一定要加此判断，否则初始时会无限刷新
+                // 当前所选页
+                rowNum = e.curr;
+                // 在此请求所选页数据
+            }
+        },
+        skip: true, //是否开启跳页
+        skin: '#1caf9a', //加载内置皮肤，也可以直接赋值16进制颜色值，如:#c00
+        groups: 7, //连续显示分页数
+        prev: false,
+        next: false
+    });
+    /*]]>*/
+</script>

@@ -1,0 +1,120 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <div class="search-box" data-placeholder="模糊搜索人名或组织架构名"></div>
+    
+    <div class="row mt30">
+        <div class="col-md-4 mb10">
+            <button type="button" class="btn btn-success btn-block" onclick="getData()">获取完整数组：selectorsFunc()</button>
+        </div>
+        <div class="col-md-4 mb10">
+            <button type="button" class="btn btn-success btn-block" onclick="getData(0)">获取人员id串：selectorsFunc(0)</button>
+        </div>
+        <div class="col-md-4 mb10">
+            <button type="button" class="btn btn-success btn-block" onclick="getData(1)">获取架构id串：selectorsFunc(1)</button>
+        </div>
+        <div class="col-md-4 mb10">
+            <button type="button" class="btn btn-warning btn-block" onclick="setData()">设置数据(人员1)：setData(data)</button>
+        </div>
+        <div class="col-md-4 mb10">
+            <button type="button" class="btn btn-info btn-block" onclick="toggle()">切换样式</button>
+        </div>
+    </div>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;div class="search-box" data-placeholder="模糊搜索人名或组织架构名"&gt;&lt;/div&gt;
+    
+    <span class="cc00 f12">注：class中添加chosen，即可渲染出另一种样式</span>
+</pre>
+<label class="title f18">三、引入JS文件</label>
+<pre>
+    &lt;script type="text/javascript" src="${Env.global_static_url}/js/custom.search/customSearch.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+</pre>
+<label class="title f18">四、用法（有问题咨询逍丹或前端）</label> 
+<pre>
+    <label class="f18">此插件默认是多选的，若想单选，可添加属性：single，如：</label>
+    <label class="cc00">&lt;div class="search-box" single data-placeholder="模糊搜索人名或组织架构名"&gt;&lt;/div&gt;</label>
+    
+    <label class="f18">1、初始化</label>
+    var selectorsFunc = initSearch($(".search-box")[0], searchParam);
+    <label class="cc00 f12">解释：</label>
+    <span class="cc00 f12">1、selectorsFunc是初始化方法返回的一个实例，类型是Function，组件搜索结果的获取和赋值都要基于此实例。</span>
+    <span class="cc00 f12">2、searchParam可以是搜索方法，也可以是公用搜索的请求参数：
+            1）当searchParam是搜索方法时，返回的数据结构是固定的：List&lt;Map&gt;，其中Map有三个key：id(数据id)，name(数据名称)，type(数据类型，即人还是组织架构)
+            2）当searchParam是请求参数时:
+                   var searchParam = {
+                       searchType: 0,          <span class="c666">// 0：人员；1：组织架构；2：人员+组织架构；3：仅仅是离职人员</span>
+                       isContainsResign: 0, <span class="c666">// 查询的人员中是否包含离职人员0：不包含，1：包含</span>
+                       excludeIds: "" <span class="c666">// 搜索结果中排除此id串所包含的项目</span>
+                   };
+    </span>
+    
+    <label class="f18">2、获取选择的人或组织架构</label>
+    // 获取选中的数据
+    var selected = selectorsFunc(type);
+    <span class="cc00 f12">1)、type：undefined（即不传值） 返回完整数组；
+        2)、type：0 返回人员id串；
+        3)、type：1 返回架构id串
+    </span>
+    
+    <label class="f18">3、通过数组为组件赋值</label>
+    selectorsFunc.setData(dataList);
+    <label class="cc00 f12">解释：</label>
+    <span class="cc00 f12">dataList与后台搜索的结果数据结构一致，若传空数组，则可清空组件已选中值</span>
+    
+    <label class="f18">4、通过id串为组件赋值</label>
+    selectorsFunc.setDataById(usersIds, structsIds, structNameType);
+    <label class="cc00 f12">解释：</label>
+    <span class="cc00 f12">1、usersIds为人员id串，当只有组织架构的时候，此项设为空字符串</span>
+    <span class="cc00 f12">2、structsIds为组织架构id串，当只有人员的时候，此项设为空字符串</span>
+    <span class="cc00 f12">3、structNameType为组织架构名称展示类型nameType 名称类型，可不传，不传时默认为2，下面是三种展示类型：</span>
+    <span class="cc00 f12">     1：组织架构名称【例:唯品会二组】 2：组织架构全名（带父级架构）【例:哈他科技-平台一级巴-唯品会组-唯品会二组】3：组织架构全名并带部门人数【例:哈他科技-平台一级巴-唯品会组-唯品会二组（2人）】</span>
+    
+    <label class="f18">5、选中某个选项和删除某个已选择结果的回调【可模拟chosen的change事件】</label>
+    selectorsFunc.onSelect = function(el) { // 删除的回调,el为选中的元素
+        ......
+    };
+    selectorsFunc.onClosed = function(el) { // 删除的回调,el为选中的元素
+        ......
+    };
+     
+    <label class="f18">6、设置组件只读</label>
+    selectorsFunc.setReadonly(isReadonly); // isReadonly：true: 只读；false: 可编辑
+    
+</pre>
+<script>
+    /*<![CDATA[*/
+    var selectorsFunc = initSearch($(".search-box")[0], getsearchData);
+    function getsearchData(val, spellCallBack) {
+        var dataList = [
+            {id: 1, name: "人员1", type: 0},
+            {id: 2, name: "人员2", type: 0},
+            {id: 3, name: "技术中心（共20人）", type: 1}
+        ];
+        setTimeout(function() {
+            spellCallBack(dataList);
+        }, 100);
+    }
+    
+    // 获取数据
+    function getData(type) {
+        if (typeof type == "undefined") {
+            alert(JSON.stringify(selectorsFunc()));
+        } else if(type == 0) {
+            alert(selectorsFunc(0));
+        } else {
+            alert(selectorsFunc(1));
+        }
+    }
+    
+    // 设置数据
+    function setData() {
+        selectorsFunc.setData([{id: 1, name: "人员1", type: 0}]);
+    }
+    
+    // 切换样式
+    function toggle() {
+        $(".search-box").toggleClass("chosen");
+    }
+    /*]]>*/
+</script>

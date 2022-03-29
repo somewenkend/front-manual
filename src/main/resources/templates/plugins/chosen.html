@@ -1,0 +1,85 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <label class="f16 db">1、单选</label>
+    <select id="testSelect" class="form-control chosen-select" data-placeholder="请选择">
+        <option value="-1">请选择</option>
+        <option value="1">选项一</option>
+        <option value="2">选项二</option>
+        <option value="3">选项三</option>
+    </select>
+    <label class="f16 db mt15">2、多选</label>
+    <select id="testSelect1" class="form-control chosen-select" multiple="multiple" data-placeholder="请选择">
+        <option value="1">选项一</option>
+        <option value="2">选项二</option>
+        <option value="3">选项三</option>
+        <option value="4">选项四</option>
+        <option value="5">选项五</option>
+        <option value="6">选项六</option>
+        <option value="7">选项七</option>
+        <option value="8">选项八</option>
+        <option value="9">选项九</option>
+        <option value="10">选项十</option>
+        <option value="11">选项十一</option>
+        <option value="12">选项十二</option>
+        <option value="13">选项十三</option>
+        <option value="14">选项十四</option>
+        <option value="15">选项十五</option>
+        <option value="16">选项十六</option>
+        <option value="17">选项十七</option>
+        <option value="18">选项十八</option>
+        <option value="19">选项十九</option>
+        <option value="20">选项二十</option>
+        <option value="21">选项二十一</option>
+        <option value="22">选项二十二</option>
+        <option value="23">选项二十三</option>
+        <option value="24">选项二十四</option>
+        <option value="25">选项二十五</option>
+        <option value="26">选项二十六</option>
+        <option value="27">选项二十七</option>
+        <option value="28">选项二十八</option>
+        <option value="29">选项二十九</option>
+        <option value="30">选项三十</option>
+    </select>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    <label class="f16">1、单选</label>
+    &lt;select id="testSelect" class="form-control chosen-select" data-placeholder="请选择"&gt;
+        &lt;option value="-1"&gt;请选择&lt;/option&gt;
+        &lt;option value="1"&gt;选项一&lt;/option&gt;
+        &lt;option value="2"&gt;选项二&lt;/option&gt;
+        &lt;option value="3"&gt;选项三&lt;/option&gt;
+    &lt;/select&gt;
+    
+    <label class="f16">2、多选</label>
+    &lt;select id="testSelect1" class="form-control chosen-select" multiple="multiple" data-placeholder="请选择"&gt;
+        &lt;option value="1"&gt;选项一&lt;/option&gt;
+        &lt;option value="2"&gt;选项二&lt;/option&gt;
+        &lt;option value="3"&gt;选项三&lt;/option&gt;
+    &lt;/select&gt;
+</pre>
+<label class="title f18">三、引入JS文件</label>
+<pre>
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/chosen/chosen.jquery.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+</pre>
+<label class="title f18">四、用法（参考网站：<a target="_blank" href="https://harvesthq.github.io/chosen/">https://harvesthq.github.io/chosen/</a>）</label> 
+<pre>
+    // 初始化chosen
+    $('#testSelect').chosen({search_contains:true});
+    // 监听chosen改变事件
+    $('#testSelect').on('change', function() {
+        alert($(this).val());
+    });
+    // 指定chosen选择的选项
+    $('#testSelect').val('1');
+    $('#testSelect').trigger("chosen:updated");
+    // 获取select的值（单选select是字符串，多选select是字符串数组）
+    $('#testSelect').val();
+</pre>
+<script type="text/javascript" src="/plugIn/chosen/chosen.jquery.min.js"></script>
+<script>
+    /*<![CDATA[*/
+    setTimeout(function(){$('#testSelect').chosen({search_contains:true});
+    $('#testSelect1').chosen({search_contains:true});}, 100);
+    /*]]>*/
+</script>

@@ -1,0 +1,44 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <input type="text" readonly="readonly" class="form-control cp" name="startDate" id="startDate" value="" placeholder="点击选择时间" data-date-format="yyyy-mm-dd hh:ii" />
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;input type="text" readonly="readonly" class="form-control cp" name="startDate" id="startDate" value="" placeholder="点击选择时间" data-date-format="yyyy-mm-dd hh:ii" /&gt;
+</pre>
+<label class="title f18">三、用法（参考网站：<a target="_blank" href="http://www.bootcss.com/p/bootstrap-datetimepicker/">http://www.bootcss.com/p/bootstrap-datetimepicker/</a>）</label>
+<pre>
+    <label style="color: #e66b6b;">1、日期选择器初始化</label>
+    $("input[name='startDate']").datetimepicker({  
+        language:  'zh-CN',
+        weekStart: 1, // 一周从哪一天开始。0-6：周日-周六
+        autoclose: true, // 当选择一个日期后是否立即关闭日期选择器
+         startView: 3, // 打开日期选择器后首先显示的视图
+        minView: 0, // 最精确的时间选择视图。0-4：分-年
+        todayHighlight:true, // 是否高亮当前日期
+        pickerPosition: "bottom-left", // 选择器出现在输入框的相对位置
+        showMeridian: false, // 是否区分上午下午
+        todayBtn: true // 是否显示选择今天的按钮      
+    });
+    
+    <label style="color: #e66b6b;">2、限制可选择的日期区间（在上面的初始化方法后面绑定下述事件）</label>
+    .on('click', function() {
+        $('#startDate').datetimepicker('setStartDate', '2019-01-01');
+        $('#startDate').datetimepicker('setEndDate', '2019-12-31');
+    });
+</pre>
+<script>
+    /*<![CDATA[*/
+    $("input[name='startDate']").datetimepicker({  
+        language:  'zh-CN',
+        weekStart: 1, // 一周从哪一天开始。0-6：周日-周六
+        autoclose: true, // 当选择一个日期后是否立即关闭日期选择器
+         startView: 3, // 打开日期选择器后首先显示的视图
+        minView: 0, // 最精确的时间选择视图。0-4：分-年
+        todayHighlight:true, // 是否高亮当前日期
+        pickerPosition: "bottom-left", // 选择器出现在输入框的相对位置
+        showMeridian: false, // 是否区分上午下午
+        todayBtn: true // 是否显示选择今天的按钮      
+    });
+    /*]]>*/
+</script>

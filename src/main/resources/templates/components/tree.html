@@ -1,0 +1,84 @@
+<div class="viewContent">
+    <span>使用tree组件之前，要先引用，我们使用require.js来模块化的管理组件，所以除了引用vue相关的js外，我们还要引入requrie.js：</span>
+    <pre>&lt;script type="text/javascript" src="${Env.global_static_url}/js/require/require-2.3.6.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;</pre>
+    <span class="mt15 dilb">树形结构涉及到递归组件，有较多的父子组件通信，所以我们还要引入bus来实现父子组件的通信：</span>
+    <pre>require(["bus", "tree"], function(bus) {});</pre>
+</div>
+
+<label class="title f18">一、一般树形结构</label>
+<div class="viewContent">
+<img src="img/tree1.png" width="489"/>
+<pre style="display: inline-block; margin-left: 30px;">
+<label class="f16">HTML代码</label>
+&lt;tree :data="dataList"&gt;&lt;/tree&gt;
+
+<label class="f16">JS代码</label>
+require(["bus", "tree"], function(bus) {
+    new Vue({
+        el: "#app",
+        data: {
+            dataList: [
+                {id: 1, name: "树杈", childList: [
+                    {id: 11, name: "树杈孩子", childList: []}
+                ]}
+            ]
+        },
+        methods: {
+        },
+        mounted: function() {
+            bus.$on('searchData', function(item){
+                console.log(item.id+"点击p标签");
+            });
+        }
+    });
+});
+</pre>
+</div>
+<label class="title f18">二、带操作按钮的树形结构</label>
+<div class="viewContent">
+<img src="img/tree2.png" width="489"/>
+<pre style="display: inline-block; margin-left: 30px;">
+<span class="dilb mb15 cd35400">由于操作按钮的部分是不确定的，所以需要添加特定的配置，示例如下：</span>
+<label class="f16">HTML代码</label>
+&lt;tree :data="dataList" :buttons="buttons"&gt;
+    &lt;template slot-scope="props"&gt;
+        &lt;el-button v-for="button in props.buttons" :type="button.type" :size="button.size" @click="handle(button.handle, props.item)" 
+            :icon="button.icon"&gt;{{button.text}}&lt;/el-button&gt;
+    &lt;/template&gt;
+&lt;/tree&gt;
+   
+<label class="f16">JS代码</label>
+require(["bus", "tree"], function(bus) {
+    new Vue({
+        el: "#app",
+        data: {
+            buttons: [
+                {type: "success", size: "mini", icon: "el-icon-plus", text: "添加", handle: "addData"}
+            ],
+            dataList: [
+                {id: 1, name: "树杈", childList: [
+                    {id: 11, name: "树杈孩子", childList: []}
+                ]}
+            ]
+        },
+        methods: {
+            handle: function(handle, item) {
+                bus.$emit(handle, item);
+            }
+        },
+        mounted: function() {
+            bus.$on('addData', function(item){
+                console.log(item.id+"点击按钮");
+                event.stopPropagation();
+            });
+            bus.$on('searchNodeData', function(item){
+                console.log(item.id+"点击p标签");
+            });
+        }
+    });
+});
+<span class="dilb mt15 cd35400">你会发现：HTML中多了一些用来渲染操作按钮的dom元素，Vue实例中也多维护了一项专门用来配置操作按钮的数据“buttons”。</span>
+</pre>
+</div>
+
+

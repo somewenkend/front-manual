@@ -1,0 +1,144 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <label class="f16 db mt15">1、标题+内容</label>
+    <div class="whiteBox boxShadow2">
+        <!-- 标题部分 -->
+        <div class="border border-bottom border-dark p15 bgDark">
+            <button type="button" class="btn btn-default fr"><i class="fa fa-arrow-left mr5"></i>返回</button>
+            <span class="f18 c111">
+                <i class="fa fa-recycle fa-fw mr5"></i>头部标题
+            </span>
+            <small class="mt5 db">副标题</small>
+        </div>
+        <!-- 内容部分 -->
+        <div class="p15">
+            页面内容
+        </div>
+    </div>
+    <label class="f16 db mt15">2、标题+查询表单+查询结果</label>
+    <!-- 表单块儿 -->
+    <div class="whiteBox boxShadow2">
+        <div class="border border-bottom border-dark p15">
+            <button type="button" class="btn btn-default fr"><i class="fa fa-arrow-left mr5"></i>返回</button>
+            <span class="f18 c111">
+                <i class="fa fa-microchip mr5"></i>头部标题
+            </span>
+            <small class="mt5 db">副标题</small>
+        </div>
+        <form id="searchForm">
+            <div class="border border-bottom border-dark bgDark p15">
+                表单元素
+            </div>
+            <div class="p15">
+                <button type="button" class="btn btn-success"><i class="fa fa-search mr5"></i>查询</button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- 内容块儿 -->
+    <div class="whiteBox boxShadow2 mt20">
+        <div class="border border-bottom border-dark p15 bgDark">
+            <h1 class="f18 c111">标题</h1>
+        </div>
+        <div class="p15">
+            内容
+        </div>
+    </div>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    <label class="f16">1、标题+内容</label>
+    &lt;#include "/pub/commonInclude.ftl"&gt;
+    &lt;!doctype html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="renderer" content="webkit"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;meta name="apple-mobile-web-app-capable" content="yes" /&gt;
+    &lt;meta name="apple-mobile-web-app-title" content="HISP"&gt;
+    &lt;title&gt;标题-HISP&lt;/title&gt;
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/css/min/min.css?v=${Env.global_css_version!}"&gt;
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/css/page/page.css?v=${Env.global_css_version!}"&gt;
+    &lt;style&gt;&lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;script type="text/javascript" src="${Env.global_static_url}/js/loading.page/loading.page.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+    &lt;div class="whiteBox boxShadow2"&gt;
+        &lt;!-- 标题部分 --&gt;
+        &lt;div class="border border-bottom border-dark p15 bgDark"&gt;
+            &lt;button type="button" class="btn btn-default fr"&gt;&lt;i class="fa fa-arrow-left mr5"&gt;&lt;/i&gt;返回&lt;/button&gt;
+            &lt;span class="f18 c111"&gt;
+                &lt;i class="fa fa-recycle fa-fw mr5"&gt;&lt;/i&gt;头部标题
+            &lt;/span&gt;
+            &lt;small class="mt5 db"&gt;副标题&lt;/small&gt;
+        &lt;/div&gt;
+        &lt;!-- 内容部分 --&gt;
+        &lt;div class="p15"&gt;
+            页面内容
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;script type="text/javascript" src="${Env.global_static_url}/js/min/min.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="${Env.global_static_url}/js/main/main.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        $(document).ready(function(){
+    
+        });
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+    <label class="f16 mt15">2、标题+查询表单+查询结果</label>
+    &lt;#include "/pub/commonInclude.ftl"&gt;
+    &lt;!doctype html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="renderer" content="webkit"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;meta name="apple-mobile-web-app-capable" content="yes" /&gt;
+    &lt;meta name="apple-mobile-web-app-title" content="HISP"&gt;
+    &lt;title&gt;标题-HISP&lt;/title&gt;
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/css/min/min.css?v=${Env.global_css_version!}"&gt;
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/css/page/page.css?v=${Env.global_css_version!}"&gt;
+    &lt;style&gt;&lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;script type="text/javascript" src="${Env.global_static_url}/js/loading.page/loading.page.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+    &lt;!-- 表单块儿 --&gt;
+    &lt;div class="whiteBox boxShadow2"&gt;
+        &lt;div class="border border-bottom border-dark p15"&gt;
+            &lt;button type="button" class="btn btn-default fr"&gt;&lt;i class="fa fa-arrow-left mr5"&gt;&lt;/i&gt;返回&lt;/button&gt;
+            &lt;span class="f18 c111"&gt;
+                &lt;i class="fa fa-microchip mr5"&gt;&lt;/i&gt;头部标题
+            &lt;/span&gt;
+            &lt;small class="mt5 db"&gt;副标题&lt;/small&gt;
+        &lt;/div&gt;
+        &lt;form id="searchForm"&gt;
+            &lt;div class="border border-bottom border-dark bgDark p15"&gt;
+                表单元素
+            &lt;/div&gt;
+            &lt;div class="p15"&gt;
+                &lt;button type="button" class="btn btn-success"&gt;&lt;i class="fa fa-search mr5"&gt;&lt;/i&gt;查询&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- 内容块儿 --&gt;
+    &lt;div class="whiteBox boxShadow2 mt20"&gt;
+        &lt;div class="border border-bottom border-dark p15 bgDark"&gt;
+            &lt;h1 class="f18 c111"&gt;标题&lt;/h1&gt;
+        &lt;/div&gt;
+        &lt;div class="p15"&gt;
+            内容
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;script type="text/javascript" src="${Env.global_static_url}/js/min/min.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="${Env.global_static_url}/js/main/main.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        $(document).ready(function(){
+    
+        });
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+</pre>

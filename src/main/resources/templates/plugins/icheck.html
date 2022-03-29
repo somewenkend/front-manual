@@ -1,0 +1,56 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <label class="f16 db">1、radio</label>
+    <label class="i-checks mr20 cp"><input type="radio" value="1" name="timeUnit" checked="checked"/>日</label>
+    <label class="i-checks mr20 cp"><input type="radio" value="2" name="timeUnit"/>周</label>
+    <label class="i-checks mr20 cp"><input type="radio" value="3" name="timeUnit"/>月</label>
+    <label class="f16 db mt15">2、checkbox</label>
+    <label class="i-checks mr20 cp"><input type="checkbox" value="1" name="country" checked="checked"/>泰国</label>
+    <label class="i-checks mr20 cp"><input type="checkbox" value="2" name="country"/>新加坡</label>
+    <label class="i-checks mr20 cp"><input type="checkbox" value="3" name="country"/>印度尼西亚</label>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    <label class="f16">1、radio</label>
+    &lt;label class="i-checks mr20 cp"&gt;&lt;input type="radio" value="1" name="timeUnit" checked="checked"/&gt;日&lt;/label&gt;
+    &lt;label class="i-checks mr20 cp"&gt;&lt;input type="radio" value="2" name="timeUnit"/&gt;周&lt;/label&gt;
+    &lt;label class="i-checks mr20 cp"&gt;&lt;input type="radio" value="3" name="timeUnit"/&gt;月&lt;/label&gt;
+    
+    <label class="f16">2、checkbox</label>
+    &lt;label class="i-checks mr20 cp"&gt;&lt;input type="checkbox" value="1" name="country" checked="checked"/&gt;泰国&lt;/label&gt;
+    &lt;label class="i-checks mr20 cp"&gt;&lt;input type="checkbox" value="2" name="country"/&gt;新加坡&lt;/label&gt;
+    &lt;label class="i-checks mr20 cp"&gt;&lt;input type="checkbox" value="3" name="country"/&gt;印度尼西亚&lt;/label&gt;
+</pre>
+<label class="title f18">三、用法（参考网站：<a target="_blank" href="http://www.51xuediannao.com/js/jquery/icheck.html">http://www.51xuediannao.com/js/jquery/icheck.html</a>）</label> 
+<pre>
+    <label class="f16">1、radio的常用方法</label>
+    // 设为勾选状态
+    $('input[name="timeUnit"][value="2"]').iCheck('check');
+    // 设为非勾选状态 
+    $('input[name="timeUnit"][value="2"]').iCheck('uncheck');
+    // 监听选择事件
+    $('input[name="timeUnit"]').on('ifChecked', function(event){
+        alert($(this).val());
+    });
+    // 获取控件的值
+    $('input[name="timeUnit"]:checked').val();
+    
+    <label class="f16">2、checkbox的常用方法</label>
+    // 监听改变（选中或者取消）事件
+    $('input[name="country"]').on('ifChanged', function(event){
+        alert($(this).val());
+    });
+    // 获取控件的值
+    var checkboxArr = [];
+    $('input[name="country"]:checked').each(function() {
+        checkboxArr.push($(this).val());
+    });
+    
+    <label style="color: #e66b6b;">注意：更新icheck（调用了form表单的reset方法之后，icheck样式不会随值改变，此时需要更新icheck）</label>
+    $('input[name="timeUnit"]').iCheck('update');
+</pre>
+<script>
+	/*<![CDATA[*/
+    $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green"});
+    /*]]>*/
+</script>

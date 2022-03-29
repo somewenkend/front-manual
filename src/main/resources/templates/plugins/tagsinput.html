@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="/plugIn/bootstrap-tagsinput/css/bootstrap-tagsinput.css" />
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+	<input type="text" id="allMails" class="form-control" data-role="tagsinput" />
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;input type="text" id="allMails" class="form-control" data-role="tagsinput" /&gt;
+</pre>
+<label class="title f18">三、引入css文件</label>
+<pre>
+    &lt;link rel="stylesheet" href="${Env.global_static_url}/plugIn/bootstrap-tagsinput/css/bootstrap-tagsinput.css?v=${Env.global_css_version!}" /&gt;
+</pre>
+<label class="title f18">四、引入js文件</label>
+<pre>
+    &lt;script src="${Env.global_static_url}/plugIn/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+</pre>
+<label class="title f18">五、用法（参考网站：<a target="_blank" href="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/">http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/</a>）</label>
+<pre>
+    // 添加tag
+    $('#allMails').tagsinput('add', 'tag1,tag2');
+    // 移除tag
+    $('#allMails').tagsinput('remove', 'tag1');
+    // 清空
+    $('#allMails').tagsinput('removeAll');
+</pre>
+<script src="/plugIn/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>

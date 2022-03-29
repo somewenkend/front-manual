@@ -1,0 +1,24 @@
+/*simpleEditor插件样式*/
+.custom-editor {
+	width: 100%;
+}
+
+.custom-editor .edit-box {
+	min-height: 100px;
+	outline:none;
+	padding: 10px;
+	overflow: auto;
+	background-color: #fbfbfb;
+}
+
+.custom-editor .insert-box {
+	margin-top: 5px;
+}
+
+.custom-editor .insert-box form{
+	display: inline-block;
+}
+
+.custom-editor .insert-input {
+	display: none;
+}

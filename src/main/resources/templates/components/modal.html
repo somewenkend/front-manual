@@ -1,0 +1,55 @@
+<label class="title f18">一、展示效果</label>
+<!-- 模态框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="f18 c111">标题</span>
+            </div>
+            <div class="modal-body">
+                模态框中内容
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-circle-o-notch fa-fw mr5"></i>取消</button>
+                <button type="button" class="btn btn-success"><i class="fa fa-floppy-o mr5"></i>保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="viewContent">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">打开模态框</button>
+</div>
+<label class="title f18">二、HTML代码</label> 
+<pre>
+    &lt;!-- 模态框 --&gt;
+    &lt;div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"&gt;
+        &lt;div class="modal-dialog" role="document"&gt;
+            &lt;div class="modal-content"&gt;
+                &lt;div class="modal-header"&gt;
+                    &lt;button type="button" class="close" data-dismiss="modal" aria-label="Close"&gt;&lt;span aria-hidden="true"&gt;&times;&lt;/span&gt;&lt;/button&gt;
+                    &lt;span class="f18 c111"&gt;标题&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class="modal-body"&gt;
+                    模态框中内容
+                &lt;/div&gt;
+                &lt;div class="modal-footer"&gt;
+                    &lt;button type="button" class="btn btn-default" data-dismiss="modal"&gt;&lt;i class="fa fa-circle-o-notch fa-fw mr5"&gt;&lt;/i&gt;取消&lt;/button&gt;
+                    &lt;button type="button" class="btn btn-success"&gt;&lt;i class="fa fa-floppy-o mr5"&gt;&lt;/i&gt;保存&lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;!-- 可直接打开模态框的按钮 --&gt;
+    &lt;button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"&gt;打开模态框&lt;/button&gt;
+    
+    <label style="color: #e66b6b;">注意：若不想在点击空白处、按ESC按钮时关闭模态框，则需要在模态框中添加属性：data-backdrop="static" data-keyboard="false"</label>
+</pre>
+<label class="title f18">三、JS代码</label> 
+<pre>
+    // JS打开模态框
+    $('#myModal').modal('show');
+    // JS关闭模态框
+    $('#myModal').modal('hide');
+</pre>

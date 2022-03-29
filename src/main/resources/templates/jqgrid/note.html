@@ -1,0 +1,96 @@
+<!-- 不分页 -->
+<div id="note_1" class="none">
+    <b>功能一览</b>
+    <p>1、自定义表头</p>
+    <p>2、鼠标单击样式</p>
+    <p>3、行单击事件</p>
+    <p>4、展示列合计值</p>
+    <p>5、添加数据行颜色</p>
+    <p>6、添加鼠标进入行事件</p>
+    <p>7、添加鼠标离开行事件</p>
+    <p>8、添加鼠标在行中移动事件</p>
+    <p>9、开启全局模糊匹配</p>
+    <p>10、开启列序号配置</p>
+    <p>11、自定义表头（列显示/隐藏）配置存入localstorage<small class="cc00">（localstorage空间有限，请酌情谨慎使用！）</small></p>
+    <b>注    意!!</b>
+    <p>一、formatter</p>
+    <p> 可通过formatter方法格式化出来想要的数据，如本页面表格中的按钮。formatter方法的参数，</p>
+    <p>cellValue：行数据中name的值；</p>
+    <p>options：jqgrid的配置项；</p>
+    <p>data：此行的原数据；</p>
+    <p>二、关于展示列合计值</p>
+    <p>   1)配置表格脚部显示：footerrow: true</p>
+    <p>   2)在需要的列配置中开启求合计值："totalSum": true；若需保留小数则添加属性"fixed": 2，即保留两位小数，求平均值同理</p>
+    <p>   3)在表格初始化完成回调方法中刷新列合计值</p>
+    <p>   4)表格中的值可以改变的情况下，不可使用全局模糊匹配，需用表格列筛选代替</p>
+    <p>三、关于添加数据行颜色</p>
+    <p>   1)在需要显示的每一列都配置："cellattr": cellAddStyle</p>
+    <p>   2)声明方法：cellAddStyle，返回所需的样式</p>
+</div>
+<!-- 前端分頁 -->
+<div id="note_2" class="none">
+    <b>功能一览</b>
+    <p>1、行双击事件</p>
+    <p>2、取消行点击样式</p>
+    <p>3、数据列select筛选</p>
+    <p>4、展示列平均值</p>
+    <p>5、添加复选框</p>
+    <p>6、开启默认排序某一列</p>
+    <p>7、单元格编辑</p>
+    <b>注    意!!</b>
+    <p>一、关于列筛选功能</p>
+    <p>   1)首先开启表格的工具栏搜索</p>
+    <p>   2)需要在表头数组中进行列配置："stype": "select"</p>
+    <p>   3)关闭其他列的工具栏搜索："search": false</p>
+    <p>二、若要开启含input框的全局模糊匹配，需同时开启一般全局模糊匹配</p>
+    <p>三、关于展示列平均值</p>
+    <p>   1)配置表格脚部显示：footerrow: true</p>
+    <p>   2)配置求合计或求平均的文本：calculationType: '平均'</p>
+    <p>   3)在需要的列配置中开启求平均值："totalAve": true</p>
+    <p>   4)在表格初始化完成回调方法中刷新列平均值</p>
+    <p>四、关于jqgrid单元格编辑</p>
+    <strong class="cc0392b">  设置可编辑单元格的列，禁止使用formatter！！！</strong>
+</div>
+<!-- 后端分頁 -->
+<div id="note_3" class="none">
+    <b>功能一览</b>
+    <p>1、后端分页</p>
+    <p>2、传form表单对象到后台</p>
+    <p>3、后台排序</p>
+    <p>4、请求成功回调方法</p>
+    <p>5、请求失败回调方法</p>
+    <p>6、渲染多级表头</p>
+    <b>注    意!!</b>
+    <p>一、关于后台分页的参数</p>
+    <p>   1)getParameter("page");（当前页码）</p>
+    <p>   2)getParameter("rows");（一页行数）</p>
+    <p>二、关于后台排序的参数（<span style="color: #bd1c56;">试着给年龄列排序</span>）</p>
+    <p>   1)getParameter("sidx");（排序字段）</p>
+    <p>   2)getParameter("sord");（排序方式）</p>
+    <p>三、关于后台分页的数据结构</p>
+    <p>	   {</p>
+    <p>        page: 1, // 当前页码</p>
+    <p>        record: 100, // 数据总条数</p>
+    <p>        rows: [], // 数据数组</p>
+    <p>        total: 10 // 总页数</p>
+    <p>    }</p>
+</div>
+<!-- 备注 -->
+<div id="note_4" class="none">
+
+<!-- 前端手册更新须知 -->
+1、home.html页面中，.sub-menu里面添加对应的li，li的id为页面的名字
+2、home.html页面中，.contentContainer里面添加对应的div，div的id为页面的名字
+3、将对应页面移至template对应的文件夹下面
+4、在页面中适当位置添加“一键复制代码”按钮（id为页面名字+"_"+"copy"）：
+	<span class="clipboard" id="allselect_copy" data-clipboard-action="copy" data-clipboard-text=""><i class="fa fa-copy mr5"></i>一键复制</span>
+5、为被复制代码的容器添加id（id为页面名字+"_"+"content"）：
+	<div class="viewContent" id="allselect_content"></div>
+6、为一键复制按钮赋data-clipboard-text的属性值：
+	$('#allselect_copy').attr('data-clipboard-text', $('#allselect_content').html());
+7、初始化“一键复制按钮”并添加复制成功事件：
+	var clipboard = new Clipboard('#allselestCopy');
+	clipboard.on('success', function(e) {
+		alert('代码已复制到剪贴板！');
+    });	
+</div>

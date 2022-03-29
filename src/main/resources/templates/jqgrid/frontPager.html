@@ -1,0 +1,186 @@
+<article class="col-md-7">
+    <section>
+        <table id="table2"></table>
+        <div id="table2Pager"></div>
+    </section>
+    <section class="table-code">
+        <h3>原始表格结构代码</h3><p>&nbsp;</p>
+    	<code>
+        &lt;div class="table-box"&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;table id="table2"&gt;&lt;/table&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;div id="table2Pager"&gt;&lt;/div&gt;<br/>
+        &lt;/div&gt;
+        </code>
+    </section>
+    <section class="tableHeaderCode">
+        <h3>表头数组</h3><p>&nbsp;</p>
+        <code>
+            [{"label":jqgAdapt.freezeHtml + "日期", "name": "date", "sortable": false, "search": false},<br/>
+            {"label":"国家", "name": "country", "stype": "select", "sortable": false},<br/>
+            {"label":"性格", "name": "character", "sortable": false, "search": false},<br/>
+            {"label":"身高", "name": "height", "sortable": false, "search": false},<br/>
+            {"label":"财富", "name": "wealth", "sorttype": "float", "search": false, "formatter": function(cellValue, options, data) {
+                return "&lt;span class='editSpan' onclick='updateParams(\"" + data.id + "\",\"" + options.colModel.name + "\")'&gt;" + cellValue + "&lt;/span&gt;";
+            }},<br/>
+            {"label":"年龄", "name": "age", "sorttype": "float", "editable": true, "cellattr": function(){return "class='' style='color: #0088cc !important;' title='';";}, "search": false, "totalAve": true, "fixed": 2},<br/>
+            {"label":"车型", "name": "model", "search": false, "search": false},<br/>
+            {"label":"操作", "name": "id", "sortable": false, "search": false, "formatter": function(cellValue, options, data) {
+                return "&lt;button class='btn btn-success btn-sm'&gt;这是个按钮&lt;/button&gt;";
+            }}]
+        </code>
+    </section>
+</article>
+<aside class="col-md-5">
+    <section class="codeArea">
+        <pre id="table2FcCode" class="tableCodeArea">
+        </pre>
+    </section>
+</aside>
+<script>
+    /*<![CDATA[*/
+    // 更新表头数据
+    function updateHeader2() {
+        tableHeader = [{"label":jqgAdapt.freezeHtml + "日期", "name": "date", "sortable": false, "search": false},
+            {"label":"国家", "name": "country", "stype": "select", "sortable": false},
+            {"label":"性格", "name": "character", "sortable": false, "search": false},
+            {"label":"身高", "name": "height", "sortable": false, "search": false},
+            {"label":"财富", "name": "wealth", "sorttype": "float", "search": false},
+            {"label":"年龄", "name": "age", "sorttype": "float", "editable": true, "cellattr": function(){return "class='' style='color: #0088cc !important;' title='';";}, "search": false, "totalAve": true, "fixed": 2},
+            {"label":"车型", "name": "model", "search": false, "search": false},
+            {"label":"操作", "name": "id", "sortable": false, "search": false, "formatter": function(cellValue, options, data) {
+                return "<button class='btn btn-success btn-sm'>这是个按钮</button>";
+            }}];
+    }
+    
+    // 前台分页
+    function showTable2() {
+    var tableId = "table2";
+    var addBtn = 0;
+    // ====== 3、设置数据列select筛选 start
+    tableHeader = jqgAdapt.addSearchSelect(tableHeader, tableData);
+    // 设置数据列select筛选 end
+
+    $.jgrid.gridUnload(tableId);
+    $("#" + tableId).jqGrid({
+        colModel: tableHeader,
+        data: tableData,
+        loadonce: true,
+        datatype: "local",
+        styleUI: "Bootstrap",
+        autowidth:true,
+        shrinkToFit: false,
+        altRows: true,
+        pager: "#" + tableId + "Pager",
+        deselectAfterSort: true,
+        height: 500,
+        viewrecords: true, 
+        emptyrecords: "未查询到数据", 
+        
+        // ====== 7、单元格编辑 start
+        cellsubmit:"clientArray",
+        cellEdit: true,
+        beforeSaveCell: function(rowid, cellname, value, iRow, iCol) {
+            if (value == '') { // 没有手动输入
+                 $('#' + tableId).jqGrid("restoreCell",iRow,iCol);
+            } else { // 手动输入后
+                if (value.trim() == '') {
+                    $('#' + tableId).jqGrid("restoreCell",iRow,iCol);
+                    alertCountDown(2, "不允许输入空！");
+                } else {
+                    if (cellname == "age") {
+                        if(/[^\d]/g.test(value.trim())) {
+                            $('#' + tableId).jqGrid("restoreCell",iRow,iCol);
+                            alertCountDown(2, "只能输入正整数！");
+                        }
+                    } else {
+                        if(!/^[0-9]+(.[0-9]{0,2})?$/g.test(value.trim())) {
+                            $('#' + tableId).jqGrid("restoreCell",iRow,iCol);
+                            alertCountDown(2, "只能输入数字，小数点请输入两位以内！");
+                        }
+                    }
+                }
+            }
+        },
+        afterSaveCell: function(rowid, cellname, value, iRow, iCol){
+            jqgAdapt.totalAveColumn(tableId);
+            // 获取修改过的值
+            // $('#table2').jqGrid('getChangedCells', 'dirty');
+        },
+        // 单元格编辑 end
+        
+        // ====== 6、 默认排序 start
+        sortname: "wealth", // 排序列name
+        sortorder: "desc", // 排序方式，“desc”：降序；“asc”：降序
+        // 默认排序 end
+        
+        // ====== 4、展示列平均值 start
+        footerrow: true,
+        calculationType: '平均',
+        // 展示列平均值 end
+           
+        // ====== 5、添加复选框 start
+        multiselect:true,
+        // 添加复选框 end
+        
+        rowNum: 10, 
+        rowList: [5,10,20],
+
+        // ====== 1、设置行双击事件 start
+        ondblClickRow: function(rowid,iRow,iCol,e) {
+            var rowData = $(this).getLocalRow(rowid);
+            alert("双击的行id是：" + rowid);
+        },
+        // 设置行双击事件 end
+
+        // ====== 2、取消点击行样式 start
+        beforeSelectRow: function (rowid, e) { // 取消点击选中行（除点击checkbox外）
+            if (typeof($(e.target).closest('td')[0]) == 'undefined') { // 防止拖拽报错
+                return false;
+            } else {
+                var $myGrid = $(this), i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),
+                    cm = $myGrid.jqGrid('getGridParam', 'colModel');
+                return (cm[i].name === 'cb');
+            }
+        },
+        // 取消点击行样式 end
+
+        resizeStop: function() {
+            jqgAdapt.repairJqg(tableId, 500);
+        },
+        gridComplete:function(){
+            if (addBtn == 0) {
+                $('#toolBar_table2').append('<span type="button" class="btn btn-success btn-sm" onclick="selectCheckboxs()">点击查看选中的行</span>');
+                $('#toolBar_table2').append('<span type="button" class="btn btn-success btn-sm ml5" onclick="selectCheckTable()">点击check未保存单元格</span>');
+                addBtn++;
+            }
+            // 刷新列平均值
+            jqgAdapt.totalAveColumn(tableId);
+            
+            jqgAdapt.adjustSize(tableId, 500);
+            // 开启表格的工具栏搜索
+            $('#' + tableId).jqGrid('filterToolbar', {
+                defaultSearch: 'cn',
+                stringResult: false,
+                searchOnEnter: false,
+                searchOperators: false
+            });
+        }
+    });
+    jqgAdapt.setFrozenCol(tableId);
+}
+/**
+ * 查看选中行
+ */
+function selectCheckboxs() {
+    var ids = $('#table2').jqGrid('getGridParam','selarrrow');
+    alert("选择的行id有：" + ids);
+}
+
+function selectCheckTable() {
+	if(!jqgAdapt.checkCellEditor('table2')){
+	    return false;
+    }
+	alertCountDown(3, "没有检测到未保存单元格！");
+}
+    /*]]>*/
+</script>

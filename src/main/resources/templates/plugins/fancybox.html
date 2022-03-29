@@ -1,0 +1,85 @@
+<link rel="stylesheet" type="text/css" href="/plugIn/fancybox/source/jquery.fancybox.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/plugIn/fancybox/source/helpers/jquery.fancybox-thumbs.css" />
+<link rel="stylesheet" type="text/css" href="/plugIn/fancybox/source/helpers/jquery.fancybox-buttons.css" />
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <a class="fancybox dilb" href="https://files.htchn.com/pic/bgImg/155108404863520190225164048635.jpg" data-fancybox-group="gallery">
+       <img id="referImg" src="https://files.htchn.com/pic/bgImg/155108404863520190225164048635.jpg" class='img-responsive dilb mt15' width="240px;"/>
+    </a>
+    <a class="fancybox dilb" href="https://files.htchn.com/pic/bgImg/155108409733020190225164137330.jpg" data-fancybox-group="gallery">
+       <img id="referImg" src="https://files.htchn.com/pic/bgImg/155108409733020190225164137330.jpg" class='img-responsive dilb mt15' width="240px;"/>
+    </a>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;div id="scrollT"&gt;
+        &lt;p&gt;超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！&lt;/p&gt;
+    &lt;/div&gt;
+</pre>
+<label class="title f18">三、引入CSS文件</label>
+<pre>
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/plugIn/fancybox/source/jquery.fancybox.css?v=${Env.global_css_version!}" media="screen" /&gt;
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/plugIn/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=${Env.global_css_version!}" /&gt;
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/plugIn/fancybox/source/helpers/jquery.fancybox-buttons.css?v=${Env.global_css_version!}" /&gt;
+</pre>
+<label class="title f18">四、引入JS文件</label>
+<pre>
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/fancybox/source/jquery.fancybox.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/fancybox/source/helpers/jquery.fancybox-buttons.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+</pre>
+<label class="title f18">五、用法（参考网站：<a target="_blank" href="http://fancybox.net/api">http://fancybox.net/api</a>）</label>
+<pre>
+    <label style="color: #e66b6b;">1、幻灯片插件初始化</label>
+    $(".fancybox").fancybox({
+        padding:0, // 图片展示板的内边距
+        helpers : { // 左右切换按钮，缩略图等一些辅助控件的配置
+            buttons : {},
+            thumbs : {
+                width  : 50,
+                height : 50
+            }
+        }
+    });
+    
+    <label style="color: #e66b6b;">2、给通过ueditor上传的图片添加fancybox的方法</label>
+    function initFancybox() {
+        $(this).find('.content-box').find('img').each(function(index, el) {
+            var imgUrl = $(el).attr('src');
+            // 如果是附件图片不展示
+            if(imgUrl.indexOf("plugIn/ueditor1_4_3_3/dialogs/attachment") &lt;= 0){
+                $(el).wrap('&lt;a class="fancybox dilb" href="' + imgUrl + '" data-fancybox-group="gallery"&gt;&lt;/a&gt;');
+            }
+        });
+        
+        $(".fancybox").fancybox({
+            padding:0, // 图片展示板的内边距
+            helpers : { // 左右切换按钮，缩略图等一些辅助控件的配置
+                buttons : {},
+                thumbs : {
+                    width  : 50,
+                    height : 50
+                }
+            }
+        });
+    }
+    
+    <label style="color: #e66b6b;">注意：如果是剪切过的图片，则剪切过的图片路径放在img中，原图片路径放在a标签中。</label>
+</pre>
+<script type="text/javascript" src="/plugIn/fancybox/source/jquery.fancybox.js"></script>
+<script type="text/javascript" src="/plugIn/fancybox/source/helpers/jquery.fancybox-thumbs.js"></script>
+<script type="text/javascript" src="/plugIn/fancybox/source/helpers/jquery.fancybox-buttons.js"></script>
+<script>
+    /*<![CDATA[*/
+    $(".fancybox").fancybox({
+        padding:0, // 图片展示板的内边距
+        helpers : { // 左右切换按钮，缩略图等一些辅助控件的配置
+            buttons : {},
+            thumbs : {
+                width  : 50,
+                height : 50
+            }
+        }
+    });
+    /*]]>*/
+</script>

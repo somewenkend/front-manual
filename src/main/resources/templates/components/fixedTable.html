@@ -1,0 +1,86 @@
+<style>
+    .pr{position: relative;}
+    .pa{position: absolute;}
+</style>
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <label class="f16 db">1、多级表头</label>
+    <div id="codeSouce1">
+        <div class="table-responsive" fixedhead="300">
+            <table class="table table-bordered table-hover table-striped mb0">
+                <thead>
+                    <tr>
+                        <th width="20%" rowspan="2">产品</th>
+                        <th width="30%" colspan="2">确认版</th>
+                        <th width="50%" rowspan="2">签批版</th>
+                    </tr>
+                    <tr>
+                        <th>确认版1</th>
+                        <th>确认版2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>哈伽服</td><td>100</td><td>100</td><td>201</td></tr>
+                    <tr><td>哈伽服</td><td>100</td><td>100</td><td>201</td></tr>
+                    <tr><td>哈伽服</td><td>100</td><td>100</td><td>201</td></tr>
+                    <tr><td>哈伽服</td><td>100</td><td>100</td><td>201</td></tr>
+                    <tr><td>哈伽服</td><td>100</td><td>100</td><td>201</td></tr>
+                    <tr><td>哈伽服</td><td>100</td><td>100</td><td>201</td></tr>
+                    <tr><td>哈伽服</td><td>100</td><td>100</td><td>201</td></tr>
+                    <tr><td>哈伽服</td><td>100</td><td>100</td><td>201</td></tr>
+                    <tr><td>哈伽服</td><td>100</td><td>100</td><td>201</td></tr>
+                    <tr><td>哈伽服</td><td>100</td><td>100</td><td>201</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <label class="f16 db mt15">2、一级表头</label>
+    <div id="codeSouce2">
+        <div class="table-responsive" fixedhead="200">
+            <table class="table table-bordered table-hover table-striped mb0">
+                <thead>
+                    <tr>
+                        <th width="30%">产品</th>
+                        <th width="30%">确认版</th>
+                        <th width="40%">签批版</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>哈他印花瑜伽服</td><td>100</td> <td>201</td></tr>
+                    <tr><td>哈他印花瑜伽服</td><td>100</td> <td>201</td></tr>
+                    <tr><td>哈他印花瑜伽服</td><td>100</td> <td>201</td></tr>
+                    <tr><td>哈他印花瑜伽服</td><td>100</td> <td>201</td></tr>
+                    <tr><td>哈他印花瑜伽服</td><td>100</td> <td>201</td></tr>
+                    <tr><td>哈他印花瑜伽服</td><td>100</td> <td>201</td></tr>
+                    <tr><td>哈他印花瑜伽服</td><td>100</td> <td>201</td></tr>
+                    <tr><td>哈他印花瑜伽服</td><td>100</td> <td>201</td></tr>
+                    <tr><td>哈他印花瑜伽服</td><td>100</td> <td>201</td></tr>
+                    <tr><td>哈他印花瑜伽服</td><td>100</td> <td>201</td></tr>
+                    <tr><td>哈他印花瑜伽服</td><td>100</td> <td>201</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    <span class="f14" style="color: #e66b6b;">在div.table-responsive上添加属性fixedhead，属性值为最大高度，超出此值表格将滚动</span>
+    <label style="color: #e66b6b;">注意：若表格是页面操作过程中新生成的，则需手动调用bindFixed(div)方法，参数为div.table-responsive的dom对象。</label>
+    
+    <label class="f16">1、多级表头</label><span id="codeTarget1"></span>
+    <label class="f16 mt15">2、一级表头</label><span id="codeTarget2"></span>
+    
+</pre>
+<script>
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('div[fixedhead]').each(function() {
+                bindFixed(this);
+            });
+        }, 100);
+    });
+    $('#codeTarget1').text($('#codeSouce1').html());
+    $('#codeTarget2').text($('#codeSouce2').html());
+    /*]]>*/
+</script>

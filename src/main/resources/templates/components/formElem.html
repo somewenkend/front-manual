@@ -1,0 +1,57 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <label class="f16 db">1、时间选择框</label>
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-calendar-check-o fa-fw mr5"></i>选择时间</span>
+        <input type="text" class="form_datetime form-control cp" name="selectDate" placeholder="请选择" data-date-format="yyyy-mm-dd" readonly="readonly" />
+    </div>
+    <label class="f16 db mt15">2、时间区间</label>
+       <div class="input-group">
+        <input type="text" readonly="true" class="form_datetime  form-control cp" name="startDate" id="startDate" placeholder="选择开始时间" data-date-format="yyyy-mm-dd" />
+        <div class="input-group-addon"> - </div>
+        <input type="text" readonly="true" class="form_datetime form-control cp" name="endDate" id="endDate" placeholder="选择结束时间" data-date-format="yyyy-mm-dd" />
+    </div>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    <label class="f16">1、时间选择框</label>
+    &lt;div class="input-group"&gt;
+        &lt;span class="input-group-addon"&gt;&lt;i class="fa fa-calendar-check-o fa-fw mr5"&gt;&lt;/i&gt;选择时间&lt;/span&gt;
+        &lt;input type="text" class="form_datetime form-control cp" name="selectDate" placeholder="请选择" data-date-format="yyyy-mm-dd hh:ii:00" readonly="readonly" /&gt;
+    &lt;/div&gt;
+    <label class="f16 mt15">2、时间区间</label>
+    &lt;div class="input-group"&gt;
+        &lt;input type="text" readonly="true" class="form_datetime  form-control cp" name="startDate" id="startDate" placeholder="选择开始时间" data-date-format="yyyy-mm-dd"&gt;
+        &lt;div class="input-group-addon"&gt; - &lt;/div&gt;
+        &lt;input type="text" readonly="true" class="form_datetime form-control cp" name="endDate" id="endDate" placeholder="选择结束时间" data-date-format="yyyy-mm-dd"&gt;
+    &lt;/div&gt;
+</pre>
+<label class="title f18">三、JS代码</label>
+<pre>
+    $("input.form_datetime").datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1, // 一周从哪一天开始。0-6：周日-周六
+        autoclose: true, // 当选择一个日期后是否立即关闭日期选择器
+        startView: 3, // 打开日期选择器后首先显示的视图
+        minView: 2, // 最精确的时间选择视图。0-4：分-年
+        todayHighlight:true, // 是否高亮当前日期
+        pickerPosition: "bottom-left", // 选择器出现在输入框的相对位置
+        showMeridian: false, // 是否区分上午下午
+        todayBtn: true // 是否显示选择今天的按钮      
+    });
+</pre>
+<script>
+    /*<![CDATA[*/
+    $("input.form_datetime").datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1, // 一周从哪一天开始。0-6：周日-周六
+        autoclose: true, // 当选择一个日期后是否立即关闭日期选择器
+        startView: 3, // 打开日期选择器后首先显示的视图
+        minView: 2, // 最精确的时间选择视图。0-4：分-年
+        todayHighlight:true, // 是否高亮当前日期
+        pickerPosition: "bottom-left", // 选择器出现在输入框的相对位置
+        showMeridian: false, // 是否区分上午下午
+        todayBtn: true // 是否显示选择今天的按钮      
+    });
+    /*]]>*/
+</script>

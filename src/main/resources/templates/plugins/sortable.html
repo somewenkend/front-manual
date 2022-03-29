@@ -1,0 +1,72 @@
+<style>
+    ul.sortable > li{width: 200px; height: 35px; border-radius: 5px; background-color: #1caf9a; margin-bottom: 5px; padding: 5px; color: #fff; cursor: pointer;}
+</style>
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <ul id="items" class="sortable">
+        <li data-id="1">
+            data-id: 1
+        </li>
+        <li data-id="2">
+            data-id: 2
+        </li>
+        <li data-id="3">
+            data-id: 3
+        </li>
+    </ul>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;ul id="items" class="sortable"&gt;
+        &lt;li data-id="1"&gt;
+            data-id: 1
+        &lt;/li&gt;
+        &lt;li data-id="2"&gt;
+            data-id: 2
+        &lt;/li&gt;
+        &lt;li data-id="3"&gt;
+            data-id: 3
+        &lt;/li&gt;
+    &lt;/ul&gt;
+</pre>
+<label class="title f18">三、引入js文件</label>
+<pre>
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/sortable/Sortable.min.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+</pre>
+<label class="title f18">四、用法（参考网站：<a target="_blank" href="https://www.npmjs.com/package/sortablejs">https://www.npmjs.com/package/sortablejs</a>）</label> 
+<pre>
+    var sortArray = [];
+    Sortable.create($('#items')[0], { // 参数是要排序的容器dom对象
+        dataIdAttr: "data-id", // 配置排序项关联的数据
+        delay: 0,//延迟
+        animation: 150,//动画
+        onStart: function (evt) { // 拖拽开始回调方法
+        },
+        onEnd: function (evt) { // 拖拽结束回调方法
+        },
+        onSort: function (evt) { // 列表排完序后调用
+            sortArray = this.toArray(); // 处理后的dataIdAttr新数组
+            alert("排序后的数组：" + sortArray);
+        }
+    });
+</pre>
+<script type="text/javascript" src="/plugIn/sortable/Sortable.min.js"></script>
+<script>
+    /*<![CDATA[*/
+    // ECharts对象初始化
+    var sortArray = [];
+    Sortable.create($('#items')[0], { // 参数是要排序的容器dom对象
+        dataIdAttr: "data-id", // 配置排序项关联的数据
+        delay: 0,//延迟
+        animation: 150,//动画
+        onStart: function (evt) { // 拖拽开始回调方法
+        },
+        onEnd: function (evt) { // 拖拽结束回调方法
+        },
+        onSort: function (evt) { // 列表排完序后调用
+         sortArray = this.toArray(); // 处理后的dataIdAttr新数组
+         alert("排序后的数组：" + sortArray);
+        }
+    });
+    /*]]>*/
+</script>

@@ -1,0 +1,49 @@
+<link rel="stylesheet" type="text/css" href="/plugIn/mCustomScrollbar/jquery.mCustomScrollbar.min.css" />
+<style>
+    #scrollT{width: 500px; background-color: #fff; padding: 10px;}
+</style>
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <div id="scrollT">
+        <p>超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！</p>
+    </div>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;div id="scrollT"&gt;
+        &lt;p&gt;超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！超出容器后会生成滚动条！&lt;/p&gt;
+    &lt;/div&gt;
+</pre>
+<label class="title f18">三、引入CSS文件</label>
+<pre>
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/plugIn/mCustomScrollbar/jquery.mCustomScrollbar.min.css?v=${Env.global_css_version!}" /&gt;
+</pre>
+<label class="title f18">四、引入JS文件</label>
+<pre>
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+</pre>
+<label class="title f18">五、用法（参考网站：<a target="_blank" href="http://manos.malihu.gr/jquery-custom-content-scroller/#get-started-section">http://manos.malihu.gr/jquery-custom-content-scroller/#get-started-section</a>）</label>
+<pre>
+    <label style="color: #e66b6b;">1、滚动条插件初始化</label>
+    $("#scrollT").mCustomScrollbar({
+        theme:"dark-thin", // 皮肤
+        advanced:{
+            autoExpandHorizontalScroll:true // 是否将内容水平扩展以适应任何浮动/内联块元素
+        },
+        scrollInertia: 1000, // 滚动动画持续时间
+        axis: "x" // 滚动的方向轴
+    });
+</pre>
+<script type="text/javascript" src="/plugIn/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<script>
+    /*<![CDATA[*/
+    $("#scrollT").mCustomScrollbar({
+        theme:"dark-thin", // 皮肤
+        advanced:{
+            autoExpandHorizontalScroll:true // 是否将内容水平扩展以适应任何浮动/内联块元素
+        },
+        scrollInertia: 1000, // 滚动动画持续时间
+        axis: "x" // 滚动的方向轴
+    });
+    /*]]>*/
+</script>

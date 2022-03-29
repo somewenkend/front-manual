@@ -1,0 +1,383 @@
+<style>
+    header{position: fixed; width: calc(100% - 260px); padding: 15px; color:#000; z-index: 1000; background: #fff;}
+    header > div{position: absolute; right: 0; margin-top: 10px;}
+    .tab-content{position:relative; top: 97px; overflow: auto; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 1px 3px 10px #bbb;}
+    .nav-tabs{position: fixed; width: 100%; top: 61px; background: #fff; z-index: 996;}
+    .docHead{text-align: center;}
+    section{padding: 15px;}
+    .codeArea{max-height: 1000px;}
+    .tableCodeArea{max-height: 800px; overflow-y: auto; width: auto; display:inline-block; padding: 5px;}
+    /* 功能卡样式 */
+    .funcStyle{position: fixed; top: 102px; right: 7px; width: 400px;
+        border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; background-color: #a39e9f; z-index: 1000; color: #fff}
+    .putDown{position: absolute; width:40px; height: 13px; left: 190px; text-align: center; bottom: -13px; background-color: #a39e9f;
+        border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; cursor: pointer;}
+    .putDown > i{top: -2px;}
+    #funcArea{padding: 15px; padding-top: 5px; max-height: 750px; overflow: auto;}
+    #funcArea > b{display: block; text-align: center; font-size: 16px;}
+    #funcArea p{margin-bottom:5px;}
+    /*可编辑单元格样式*/
+    .editSpan{color:  #428bca;}
+    /*提示框的样式*/
+    #reasonText{
+        position: absolute;
+        z-index: 100;
+        background: #f0ad4e;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: none;
+    }
+    /*备注页样式*/
+    #jqgTable4{width: 100%;}
+    #flexLayout_jqgTable4{display: flex;justify-content: center;}
+    #flexLayout_jqgTable4 > div{width: 900px;border-left: 1px solid #c1c1c1; border-right: 1px solid #c1c1c1; background-color: #fbfbfb;} 
+    /*备注段落样式*/
+    .remark > p{font-size: 14px; margin-top: 5px;}
+</style>
+    <!-- 鼠标事件的提示框 -->
+    <div id="reasonText"></div>
+    <!-- note模板加载区 -->
+    <div id="note"></div>
+    <!-- 功能卡 -->
+    <div class="funcStyle">
+        <div id="funcArea">
+        </div>
+        <span class="putDown" onclick="putDown()"><i class="glyphicon glyphicon-triangle-bottom"></i></span>
+    </div>
+    <header>
+        <h3 class="docHead mb5">HISP风格的jqgrid5.3.1使用文档</h3>
+        <div>
+            <small>引入CSS文件：&lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/plugIn/jqGrid/jqGrid-5.3.1/css/ui.jqgrid-bootstrap.css?v=${Env.global_css_version!}" /&gt;</small>
+            <br/><small> 引入的JS文件：&lt;script type="text/javascript" src="${Env.global_static_url}/js/jqgrid.table.hisp/jqgrid.table.hisp.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;</small>
+        </div>
+    </header>
+    <div class="contentBody">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a style="border-left: none;" href="#jqgTable1" aria-controls="jqgTable1" role="tab" data-toggle="tab">不分页表格</a></li>
+            <li role="presentation"><a href="#jqgTable2" aria-controls="jqgTable2" role="tab" data-toggle="tab">前台分页表格</a></li>
+            <li role="presentation"><a href="#jqgTable3" aria-controls="jqgTable3" role="tab" data-toggle="tab">后台分页表格</a></li>
+            <li role="presentation"><a href="#jqgTable4" aria-controls="jqgTable4" role="tab" data-toggle="tab">备注</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active content row" id="jqgTable1">
+                <article class="col-md-7">
+                    <section>
+                        <table id="table1"></table>
+                        <div id="table1Pager"></div>
+                    </section>
+                    <section class="table-code">
+	                    <h3>原始表格结构代码</h3><p>&nbsp;</p>
+                    	<code>
+                        &lt;div class="table-box"&gt;<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;table id="table1"&gt;&lt;/table&gt;<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;div id="table1Pager"&gt;&lt;/div&gt;<br/>
+                        &lt;/div&gt;
+                        </code>
+                    </section>
+                    <section class="tableHeaderCode">
+                        <h3>表头数组</h3><p>&nbsp;</p>
+                        <code>
+                            [{"label":jqgAdapt.freezeHtml + "日期", "name": "date", "cellattr": cellAddStyle, "sortable": false},<br/>
+                            {"label":"国家", "name": "country", "cellattr": cellAddStyle, "sortable": false},<br/>
+                            {"label":"性格", "name": "character", "cellattr": cellAddStyle, "sortable": false},<br/>
+                            {"label":"身高", "name": "height", "cellattr": cellAddStyle, "sortable": false},<br/>
+                            {"label":"财富", "name": "wealth", "cellattr": cellAddStyle, "sortable": false, "totalSum": true},<br/>
+                            {"label":"年龄", "name": "age", "cellattr": cellAddStyle, "sortable": false},<br/>
+                            {"label":"车型", "name": "model", "cellattr": cellAddStyle, "sortable": false},<br/>
+                            {"label":"操作", "name": "id", "cellattr": cellAddStyle, "sortable": false, "formatter": function(cellValue, options, data) {
+                                return "&lt;button class='btn btn-success btn-sm'&gt;这是个按钮&lt;/button&gt;";
+                            }}];
+                        </code>
+                    </section>
+                </article>
+                <aside class="col-md-5">
+                    <section class="codeArea">
+                        <pre id="table1FcCode" class="tableCodeArea">
+                        </pre>
+                    </section>
+                </aside>
+            </div>
+            <div role="tabpanel" class="tab-pane fade content row" id="jqgTable2">...</div>
+            <div role="tabpanel" class="tab-pane fade content row" id="jqgTable3">...</div>
+            <div role="tabpanel" class="tab-pane fade content row" id="jqgTable4"><div id="flexLayout_jqgTable4"></div></div>
+        </div>
+        
+    </div>
+    <script>
+    /*<![CDATA[*/
+        // 假数据
+        var tableHeader = [];
+        var tableData = 
+        [{"date": "2017-08-05", "country": "中国", "character": "腼腆", "height": "179", "wealth": "30000000", "age": "27", "model": "SUV", "id": "196d345"},
+        {"date": "2017-08-05", "country": "美国", "character": "开放", "height": "190", "wealth": "35600000", "age": "20", "model": "MPV", "id": "sdgd22"},
+        {"date": "2017-08-05", "country": "中国", "character": "内敛", "height": "156", "wealth": "13200000", "age": "34", "model": "旅行", "id": "12fgr4f"},
+        {"date": "2017-08-05", "country": "中国", "character": "开朗", "height": "180", "wealth": "520000", "age": "56", "model": "三厢", "id": "f23324gv"},
+        {"date": "2017-08-05", "country": "乌拉圭", "character": "活泼", "height": "173", "wealth": "9500000", "age": "20", "model": "两厢", "id": "cx5r43"},
+        {"date": "2017-08-05", "country": "墨西哥", "character": "哈哈", "height": "175", "wealth": "6230000", "age": "18", "model": "钢炮", "id": "15fgh"},
+        {"date": "2017-08-05", "country": "丹麦", "character": "没劲", "height": "171", "wealth": "30000567", "age": "69", "model": "轿跑", "id": "54511555e"},
+        {"date": "2017-08-05", "country": "澳大利亚", "character": "可好", "height": "165", "wealth": "30054000", "age": "100", "model": "商务", "id": "dfgs5486"},
+        {"date": "2017-08-05", "country": "墨西哥", "character": "美丽", "height": "154", "wealth": "47000000", "age": "75", "model": "超跑", "id": "gh4de582"},
+        {"date": "2017-08-05", "country": "加拿大", "character": "端庄", "height": "180", "wealth": "10000000", "age": "9", "model": "家轿", "id": "cdb1t74"},
+        {"date": "2017-08-05", "country": "西班牙", "character": "落落", "height": "182", "wealth": "58000000", "age": "17", "model": "肌肉", "id": "12hgt"},
+        {"date": "2017-08-05", "country": "古巴", "character": "大方", "height": "193", "wealth": "67000000", "age": "56", "model": "掀背", "id": "12457f"},
+        {"date": "2017-08-05", "country": "尼日利亚", "character": "没啥", "height": "159", "wealth": "894000000", "age": "14", "model": "电动", "id": "werwe"},
+        {"date": "2017-08-05", "country": "印度尼西亚", "character": "有吗", "height": "176", "wealth": "12300000", "age": "42", "model": "混动", "id": "4526583"}];
+        // 加载前端分页tab页
+        $('#jqgTable2').load('jqgrid/frontPager');
+        // 加载后端分页tab页
+        $('#jqgTable3').load('jqgrid/servePager', function() {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (event) {
+                // 展示哪个表格
+                switch($(this).attr('aria-controls')) {
+                    case "jqgTable1":
+                        updateHeader1();
+                        // 加载表格 
+                        showTable1();
+                        // 加载方法体代码
+                        $('#table1FcCode').html(showTable1.toString());
+                        // 加载数据行样式方法
+                        $('#table1FcCode').append('<br/><span style="color: red;">下面是给单元格添加样式的方法：</span><br/>' + cellAddStyle.toString());
+                        // 更新功能一览
+                        updateFuncArea('1');
+                        break;
+                    case "jqgTable2":
+                        updateHeader2();
+                        showTable2();
+                        $('#table2FcCode').html(showTable2.toString());
+                        $('#table2FcCode').append('<br/><span style="color: red;">下面是初始化editable的方法：</span><br/>' + initEditable.toString());
+                        $('#table2FcCode').append('<br/><span style="color: red;">下面是更新点击的可编辑单元格的方法：</span><br/>' + updateParams.toString());
+                        $('#table2FcCode').append('<br/><span style="color: red;">下面是获取选中行的方法：</span><br/>' + selectCheckboxs.toString());
+                        updateFuncArea('2');
+                        break;
+                    case "jqgTable3":
+                        updateHeader3();
+                        showTable3();
+                        $('#table3FcCode').html(showTable3.toString());
+                        $('#table3FcCode').append('<br/><span style="color: red;">下面是渲染多级表头的方法：</span><br/>' + renderHeaders.toString());
+                        updateFuncArea('3');
+                        break;
+                    case "jqgTable4":
+                        updateFuncArea('4');
+                        break;
+                }
+            });
+            $('#flexLayout_jqgTable4').load('index.html');
+            // 默认显示第一个tab页
+            updateHeader1();
+            showTable1();
+            $('#table1FcCode').html(showTable1.toString());
+            $('#table1FcCode').append('<br/><br/>' + cellAddStyle.toString());
+            // 加载注意面板内容
+            $('#note').load('jqgrid/note', function() {
+                $('#funcArea').html($('#note_1').html());
+            });
+        });
+        
+        function updateHeader1() {
+            tableHeader = [ {"label":jqgAdapt.freezeHtml + "日期", "name": "date", "cellattr": cellAddStyle, "sortable": false},
+                {"label":"国家", "name": "country", "cellattr": cellAddStyle, "sortable": false},
+                {"label":"性格", "name": "character", "cellattr": cellAddStyle, "sortable": false},
+                {"label":"身高", "name": "height", "cellattr": cellAddStyle, "sortable": false},
+                {"label":"财富", "name": "wealth", "cellattr": cellAddStyle, "sortable": false, "totalSum": true},
+                {"label":"年龄", "name": "age", "cellattr": cellAddStyle, "sortable": false},
+                {"label":"车型", "name": "model", "cellattr": cellAddStyle, "sortable": false},
+                {"label":"操作", "name": "id", "cellattr": cellAddStyle, "sortable": false, "formatter": function(cellValue, options, data) {
+                    return "<button class='btn btn-success btn-sm'>这是个按钮</button>";
+                }}];
+        }
+
+        // 不分页表格
+        var windowWidth = $(window).width();
+        var windowHeight = $(window).height();
+        function showTable1() {
+    var tableId = "table1";
+    $.jgrid.gridUnload(tableId);
+    $("#" + tableId).jqGrid({
+        colModel: tableHeader,
+        data: tableData,
+        loadonce: true,
+        datatype: "local",
+        styleUI: "Bootstrap",
+        autowidth:true,
+        shrinkToFit: false,
+        altRows: true,
+        pager: "#" + tableId + "Pager",
+        deselectAfterSort: false,
+        height: 500,
+        
+        // ====== 4、表格脚部显示，默认显示列合计值 start
+        footerrow: true,
+        // 展示列合计值 end
+        
+        // ====== 9、开启全局匹配
+        globalSearch: tableData,
+        // 开启全局匹配 end
+        
+        // ====== 10、开启列序号配置
+        rownumbers: true,
+        // 开启列序号配置 end
+        
+        viewrecords: true, 
+        emptyrecords: "未查询到数据",
+        rowNum: tableData.length,
+        // ====== 1、设置自定义表头 start
+        colMenu: true,
+        colMenuColumnDone: function() {
+            setTimeout(function(){
+                jqgAdapt.repairJqg(tableId, 500)}, 10);
+        },
+        // 设置自定义表头 end
+        
+        // ====== 11、 自定义表头配置存入localstorage start
+        // key的格式：forward_tableID_userID
+        storeHeaderKey: "ipmTrademarkForward_" + tableId + "_100",
+        // 自定义表头配置存入localstorage end
+
+        // ====== 2、设置鼠标单击样式 start
+        onSelectRow: function(rowid,status) {
+            jqgAdapt.selectTrStyle(rowid,status,$(this));
+
+            // ====== 3、设置行单击事件 start
+            var rowData = $(this).getLocalRow(rowid);
+            alert("点击的行id是：" + rowid);
+            // 设置行单击事件 end
+
+        },
+        // 设置鼠标单击样式 end
+        
+        // ====== 6、鼠标进入行事件 start
+        moseenterRow: function(rowid, event) {
+            // 行数据              
+            var aData = $(this).jqGrid('getLocalRow', rowid);
+            if (aData.height > 180) {
+                var eInfo = "身高" + aData.height + "，超过180；id：" + rowid;
+                $("#reasonText").html(eInfo);
+                if (windowWidth - event.pageX <= 660) {
+                    $("#reasonText").css({ "right": (windowWidth - event.pageX + 10) + "px", "left": "inherit" });
+                } else {
+                    $("#reasonText").css({ "left": (event.pageX + 20) + "px", "right": "inherit" });
+                }
+                if (windowHeight - event.pageY - 10 <= $("#tip").height()) {
+                    $("#reasonText").css({ "bottom": (windowHeight - event.pageY + 10) + "px", "top": "inherit" });
+                } else {
+                    $("#reasonText").css({ "top": (event.pageY + 10) + "px", "bottom": "inherit" });
+                }
+                $("#reasonText").css('display', 'block');
+            }
+        },
+        // 鼠标进入行事件 end
+        
+        // ====== 7、鼠标离开行事件 start
+        mouseleaveRow: function(rowid, event) {
+            $("#reasonText").css('display', 'none');
+        },
+        // 鼠标离开行事件 end
+        
+        // ====== 8、鼠标在行中移动事件 start
+        mousemoveRow: function(rowid, event) {
+            // 行数据            
+            var aData = $(this).jqGrid('getLocalRow', rowid);
+            if (aData.height > 180) {
+                if (windowWidth - event.pageX <= 660) {
+                    $("#reasonText").css({ "right": (windowWidth - event.pageX + 10) + "px", "left": "inherit" });
+                } else {
+                    $("#reasonText").css({ "left": (event.pageX + 20) + "px", "right": "inherit" });
+                }
+                if (windowHeight - event.pageY - 10 <= $("#tip").height()) {
+                    $("#reasonText").css({ "top": (event.pageY - $("#tip").height() - 50) + "px", "bottom": "inherit" });
+                } else {
+                    $("#reasonText").css({ "top": (event.pageY - 10) + "px", "bottom": "inherit" });
+                }
+            }
+        },
+        // 鼠标在行中移动事件 end
+        
+        resizeStop: function() {
+            jqgAdapt.repairJqg(tableId, 500);
+        },
+        gridComplete:function(){
+            // 刷新列合计值
+            jqgAdapt.totalSumColumn(tableId);
+            
+            jqgAdapt.adjustSize(tableId, 500);
+        }
+    });
+    jqgAdapt.setFrozenCol(tableId);
+    $('#' + tableId + 'Pager_center').hide();
+}
+
+    function putDown() {
+        var $func = $('#funcArea');
+        if ($func.is(':hidden')) {
+            $func.slideDown('fast');
+        } else {
+            $func.slideUp('fast');
+        }
+    }
+
+    function updateFuncArea(num) {
+        var $currentNote;
+        switch (num) {
+            case '1': 
+            $currentNote = $('#note_1');
+            break;
+            case '2':
+            $currentNote = $('#note_2');
+            break;
+            case '3':
+            $currentNote = $('#note_3');
+            break;
+            default:
+            $currentNote = $('#note_4');
+            break;
+        }
+        $('#funcArea').html($currentNote.html());
+    }
+    
+    /**
+     * 初始化editable
+     */
+   function initEditable() { // ====== 初始化editable方法
+    $(".editSpan").editable({
+    placement: 'right',
+    type : 'text',
+    mode: 'popup',
+    validate : function(value) {
+        if (value == '') {
+            return '数值不能为空，请输入修改值！';
+        } else if(/[^\d]/g.test(value.trim())) {
+            return '只能输入正整数！';
+        }
+        // 改完值后需更新单元格的值然后重新初始化editable
+        $('#table2').jqGrid('setCell',curRowId,curName,value);
+        initEditable();
+    }
+    });
+}
+
+    /**
+     * 更新点击的可编辑单元格
+     */
+     var curRowId;
+     var curName;
+     function updateParams(rowId, name) {
+    curRowId = rowId;
+    curName = name;
+}
+     
+    /**
+     * 单元格添加样式
+     */
+   function cellAddStyle(rowId, val, rawObject) { // ====== 单元格添加样式方法
+    if (Number(rawObject.height) > 180) {
+        return "style='background-color: #fd736f; color: #fff'";
+    } else {
+        return '';
+    }
+}
+   /*]]>*/
+    </script>

@@ -1,0 +1,25 @@
+<link rel="stylesheet" type="text/css" href="/plugIn/toggle-master/css/bootstrap-toggle.css" />
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <input type="checkbox" data-on="已开启" data-off="已关闭" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" value="3" name="control_btn_tv" id="control" data-width="100%" checked="checked" />
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;input type="checkbox" data-on="已开启" data-off="已关闭" data-toggle="toggle" data-onstyle="success" data-offstyle="danger" value="3" name="control_btn_tv" id="control" data-width="100%" checked="checked" /&gt;
+</pre>
+<label class="title f18">三、引入CSS文件</label>
+<pre>
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/plugIn/toggle-master/css/bootstrap-toggle.css?v=${Env.global_css_version!}" /&gt;
+</pre>
+<label class="title f18">四、引入JS文件</label>
+<pre>
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/toggle-master/js/bootstrap-toggle.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+</pre>
+<label class="title f18">五、用法（参考网站：<a target="_blank" href="https://www.bootstraptoggle.cn/">https://www.bootstraptoggle.cn/</a>）</label>
+<pre>
+    // 开
+    $('#control').bootstrapToggle('on');
+    // 关
+    $('#control').bootstrapToggle('off');
+</pre>
+<script type="text/javascript" src="/plugIn/toggle-master/js/bootstrap-toggle.js"></script>

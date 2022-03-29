@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>前端手册</title>
+<link type="text/css" href="/css/min.css" rel="stylesheet" />
+<link type="text/css" href="/css/page.css" rel="stylesheet" />
+<link type="text/css" href="/plugIn/jqGrid-5.3.1/css/ui.jqgrid-bootstrap.css" rel="stylesheet" />
+<link type="text/css" href="/plugIn/editable/bootstrap-editable.css" rel="stylesheet" />
+<script src="/js/min.js?v=20180918"></script>
+<script src="/js/jqgridTableForHisp.js?v=20180918"></script>
+<script type="text/javascript" charset="utf8" src="/plugIn/editable/bootstrap-editable.min.js"></script>
+<script src="/js/jquery.slimscroll.min.js"></script> 
+<style>
+body, html { height: 100%; background: #F2F2F2; overflow: hidden; color:#8b91a0; padding: 0; overflow: auto;}
+* { margin: 0; padding: 0 }
+body { font: 14px "微软雅黑", "FontAwesome", "Arial Narrow", HELVETICA; -webkit-text-size-adjust: 100%; }
+li { list-style: none }
+a { text-decoration: none; }
+/* navMenu */
+.navMenubox { position: fixed; width: 240px; height: calc(100% - 58px); background: #1c2229; margin: 0 auto; overflow: auto; margin-top: 58px;}
+.navMenu-top { color: #fff; border-bottom: 1px solid rgba(255,255,255,.1); width: 240px; float: left; height: 58px; position: fixed; background-color: #12181b;}
+.navMenu-top > p{ margin-top: 10px; margin-left: 5px; margin-bottom: 5px;}
+.navMenu> li { display: block; margin: 0; padding: 0; border: 0px; }
+.navMenu>li>a { display: block; overflow: hidden; padding-left: 10px; line-height: 40px; color: #ABB1B7; transition: all .3s; position: relative; text-decoration: none; font-size: 17px; border-top: 1px solid #222932; border-bottom: 2px solid #191e24; }
+.navMenu > li:nth-of-type(1)> a { border-top: 1px solid transparent; }
+.navMenu > li:last-child > a { border-bottom: 1px solid transparent; }
+.navMenu>li>a>i { font-size: 20px; float: left; font-style: normal; margin: 0 5px; }
+.navMenu li a .arrow:before { display: block; float: right; margin-top: 1px; margin-right: 15px; display: inline; font-size: 16px; font-family: FontAwesome; height: auto; content: "\f105"; font-weight: 300; text-shadow: none; }
+.navMenu li a .arrow.open:before { float: right; margin-top: 1px; margin-right: 15px; display: inline; font-family: FontAwesome; height: auto; font-size: 16px; content: "\f107"; font-weight: 300; text-shadow: none; }
+.navMenu>li>a.active, .navMenu>li>a:hover { color: #FFF; background: #12181b; }
+.navMenu>li>ul.sub-menu, .navMenu>li>ul.sub-menu>li>ul.sub-menu { display: none; list-style: none; clear: both; margin: 8px 0px 0px 10px; padding-bottom: 5px; }
+.navMenu>li.active > ul.sub-menu, .navMenu>li>ul.sub-menu>li.active >ul.sub-menu { }
+.navMenu>li>ul.sub-menu li { background: none; margin: 0px; padding: 0px; }
+.navMenu>li>ul.sub-menu li>a { display: block; font-size: 16px; line-height: 36px; padding-left: 20px; color: #ABB1B7; clear: both; }
+.navMenu>li>ul.sub-menu li>a.active, .navMenu>li>ul.sub-menu li>a:hover, .navMenu>li>ul.sub-menu>li.active >a { color: #FFF; background: #12181b; }
+.marquee-box {overflow: hidden; width: 100%; position: absolute; left: 0; top: 0}
+.marquee { width: 8000%; height: 15px}
+.wave-list-box {float: left}
+.wave-list-box ul {float: left;height: 15px;overflow: hidden;zoom: 1}
+.wave-list-box ul li {height: 15px;width: 100%;float: left;line-height: 30px;list-style: none}
+.wave-box {position: relative;height: 15px;background: #12181b;}
+.contentContainer{margin-left: 260px; position: relative; background-color: #fff; margin-bottom: 15px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 1px 3px 10px #bbb;}
+.contentContainer > div:not(#jqgrid){padding: 20px;}
+.contentContainer label.title{margin-top: 15px;}
+img{vertical-align: inherit;}
+.viewContent, pre{padding: 10px;}
+.viewContent{background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 4px;}
+.navMenubox::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    background-color: #76838f;
+}
+
+.navMenubox::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    background-color: #f4f5f2;
+}
+
+.navMenubox::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #76838f;
+}
+/*---------------------*/
+.contentContainer pre {
+	position: relative;
+}
+.contentContainer .clipboard{
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    padding: 5px 8px;
+    cursor: pointer;
+    background-color: #8bdfdd;
+    border-radius: 7px;
+    color: #fff;
+    transition: all 0.5s;
+}
+.contentContainer .clipboard:hover{
+	background-color: #26aeaa;
+}
+</style>
+</head>
+<body>
+<div class="navMenu-top">
+    <p style="font-size: 18px; font-weight: 700; text-align: right; padding-right: 5px;">前端手册</p>
+	<div class="wave-box">
+		<div class="marquee-box marquee-up" id="marquee-box">
+			<div class="marquee">
+				<div class="wave-list-box" id="wave-list-box1">
+					<ul>
+						<li>
+							<img height="15" alt="波浪" src="images/wave_02.png"/>
+						</li>
+					</ul>
+				</div>
+				<div class="wave-list-box" id="wave-list-box2">
+					<ul>
+						<li>
+							<img height="15" alt="波浪" src="images/wave_02.png"/>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="marquee-box" id="marquee-box3">
+			<div class="marquee">
+				<div class="wave-list-box" id="wave-list-box4">
+					<ul>
+						<li>
+							<img height="15" alt="波浪" src="images/wave_01.png"/>
+						</li>
+					</ul>
+				</div>
+				<div class="wave-list-box" id="wave-list-box5">
+					<ul>
+						<li>
+							<img height="15" alt="波浪" src="images/wave_01.png"/>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+ 	</div>
+</div>
+<div class="navMenubox">
+  <div id="slimtest1">
+    <ul class="navMenu">
+      <li> <a href="javascript:;" id="firstCom_1" class="afinve"> <i class="icon_1"></i> <span class=""><i class="fa fa-shield mr5"></i>组件</span> <span class="arrow"></span> </a>
+        <ul class="sub-menu" data-type="components">
+          <li><a href="javascript:;" id="firstCom_2" class="openTheContent" data-id="formElem"><span>特殊表单元素</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="collapseSearch"><span>可折叠查询区</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="singleFileUpload"><span>单文件上传</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="modal"><span>模态框</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="verticalTimeline"><span>垂直时间线</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="fieldset"><span>元素组合区</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="normalTable"><span>普通表格</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="pagenation"><span>通用分页</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="downUpload"><span>下载上传组合</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="allSelect"><span>全选checkBox</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="loadingCountdown"><span>总遮罩倒计时</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="sectionCountdown"><span>分遮罩倒计时</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="pageFrame"><span>页面框架</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="formElArr"><span>表单元素排列方式</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="inputCheck"><span>input框输入验证</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="checkEl"><span>原生checkbox,radio</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="resourcePath"><span>分布式静态资源引用路径</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="fixedTable"><span>普通表格固定表头</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="watermark"><span>svg水印</span></a></li>
+        </ul>
+      </li>
+      <li> <a href="javascript:;" class="afinve"> <i class="icon_2"></i> <span class="nav-text"><i class="fa fa-futbol-o mr5"></i>插件</span> <span class="arrow"></span> </a>
+        <ul class="sub-menu" data-type="plugins">
+          <li><a href="javascript:;" class="openTheContent" data-id="jqgrid"><span>jqgrid表格</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="echarts"><span>echarts图表</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="sortable"><span>sortable拖拽排序</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="ueditor"><span>ueditor编辑器</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="tagsinput"><span>tagsinput标签</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="plupload"><span>plupload多文件上传</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="icheck"><span>icheck选择组件</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="chosen"><span>chosen下拉列表</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="fullCalendar"><span>fullCalendar日历</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="dateTimePicker"><span>dateTimePicker时间选择器</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="mCustomScrollbar"><span>mCustomScrollbar滚动条</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="fancybox"><span>fancybox幻灯片</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="toggle"><span>开关</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="fixedTable1"><span>表头、列冻结</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="simpleEditor"><span>简单编辑器</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="searchRS"><span>搜索人/组织</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="frontSearch"><span>前端搜索(支持拼音)</span></a></li>
+        </ul>
+      </li>
+      <li> <a href="javascript:;" class="afinve"> <i class="icon_2"></i> <span class="nav-text"><i class="fa fa-rocket mr5"></i>工具</span> <span class="arrow"></span> </a>
+        <ul class="sub-menu" data-type="plugins">
+          <li><a href="/tools/autoCoding" target="_blank"><span>自动编码</span></a></li>
+        </ul>
+      </li>
+      <li> <a href="javascript:;" class="afinve"> <i class="icon_2"></i> <span class="nav-text"><i class="fa fa-vimeo mr5"></i>Vue组件</span> <span class="arrow"></span> </a>
+        <ul class="sub-menu" data-type="components">
+          <li><a href="javascript:;" class="openTheContent" data-id="tree"><span>树形结构</span></a></li>
+          <li><a href="javascript:;" class="openTheContent" data-id="bigUpload"><span>大文件断点续传</span></a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="contentContainer">
+	<!-- 树形结构 -->
+	<div id="tree" class="contentBlock" data-exist="0"></div>
+	<!-- svg水印 -->
+	<div id="watermark" class="contentBlock" data-exist="0"></div>
+    <!-- 普通表格固定表头 -->
+	<div id="fixedTable" class="contentBlock" data-exist="0"></div>
+	<!-- 分布式项目静态资源引用路径 -->
+	<div id="resourcePath" class="contentBlock" data-exist="0"></div>
+    <!-- 样式优化后的原生checkbox、radio -->
+	<div id="checkEl" class="contentBlock" data-exist="0"></div>
+    <!-- input框输入验证 -->
+	<div id="inputCheck" class="contentBlock" data-exist="0"></div>
+	<!-- 表单元素排列方式 -->
+	<div id="formElArr" class="contentBlock" data-exist="0"></div>
+	<!-- 页面框架 -->
+	<div id="pageFrame" class="contentBlock" data-exist="0"></div>
+    <!-- 分遮罩倒计时 -->
+	<div id="sectionCountdown" class="contentBlock" data-exist="0"></div>
+	<!-- 总遮罩倒计时 -->
+	<div id="loadingCountdown" class="contentBlock" data-exist="0"></div>
+	<!-- 特殊表单元素 -->
+	<div id="formElem" class="contentBlock" data-exist="0"></div>
+	<!-- 可折叠查询区 -->
+	<div id="collapseSearch" class="contentBlock" data-exist="0"></div>
+	<!-- 单文件上传 -->
+	<div id="singleFileUpload" class="contentBlock" data-exist="0"></div>
+	<!-- 模态框 -->
+	<div id="modal" class="contentBlock" data-exist="0"></div>
+	<!-- 垂直时间线 -->
+	<div id="verticalTimeline" class="contentBlock" data-exist="0"></div>
+	<!-- 元素组合区 -->
+	<div id="fieldset" class="contentBlock" data-exist="0"></div>
+	<!-- 普通表格 -->
+	<div id="normalTable" class="contentBlock" data-exist="0"></div>
+	<!-- 通用分页 -->
+	<div id="pagenation" class="contentBlock" data-exist="0"></div>
+	<!-- 下载上传组合 -->
+	<div id="downUpload" class="contentBlock" data-exist="0"></div>
+	<!-- 全选checkBox -->
+	<div id="allSelect" class="contentBlock" data-exist="0"></div>
+	<!-- jqgrid表格 -->
+	<div id="jqgrid" class="contentBlock" data-exist="0"></div>
+	<!-- echarts图表 -->
+	<div id="echarts" class="contentBlock" data-exist="0"></div>
+	<!-- sortable拖拽排序 -->
+	<div id="sortable" class="contentBlock" data-exist="0"></div>
+	<!-- ueditor编辑器 -->
+	<div id="ueditor" class="contentBlock" data-exist="0"></div>
+	<!-- tagsinput标签 -->
+	<div id="tagsinput" class="contentBlock" data-exist="0"></div>
+	<!-- plupload多文件上传 -->
+	<div id="plupload" class="contentBlock" data-exist="0"></div>
+	<!-- icheck选择组件 -->
+	<div id="icheck" class="contentBlock" data-exist="0"></div>
+	<!-- chosen下拉列表 -->
+	<div id="chosen" class="contentBlock" data-exist="0"></div>
+	<!-- fullCalendar日历 -->
+	<div id="fullCalendar" class="contentBlock" data-exist="0"></div>
+	<!-- dateTimePicker时间选择器 -->
+	<div id="dateTimePicker" class="contentBlock" data-exist="0"></div>
+	<!-- mCustomScrollbar滚动条 -->
+	<div id="mCustomScrollbar" class="contentBlock" data-exist="0"></div>
+	<!-- fancybox幻灯片 -->
+	<div id="fancybox" class="contentBlock" data-exist="0"></div>
+	<!-- toggle开关 -->
+	<div id="toggle" class="contentBlock" data-exist="0"></div>
+	<!-- 表头、列冻结 -->
+	<div id="fixedTable1" class="contentBlock" data-exist="0"></div>
+	<!-- 简单编辑器 -->
+	<div id="simpleEditor" class="contentBlock" data-exist="0"></div>
+	<!-- 搜索人/组织 -->
+	<div id="searchRS" class="contentBlock" data-exist="0"></div>
+	<!-- 前端搜索(支持拼音) -->
+	<div id="frontSearch" class="contentBlock" data-exist="0"></div>
+	<!-- 大文件断点续传 -->
+	<div id="bigUpload" class="contentBlock" data-exist="0"></div>
+</div>
+<script src="/js/main.js"></script>
+<script type="text/javascript" src="/plugIn/clipboard/clipboard.min.js"></script>
+<!-- <script type="text/javascript" src="https://g.htchn.com/js/custom.search/customSearch.js"></script> -->
+<script type="text/javascript" src="/js/custom.js"></script>
+<script type="text/javascript" src="https://g.htchn.com/plugIn/front-search/index.js"></script>
+<script>
+/*<![CDATA[*/
+$(function(){
+     // nav收缩展开
+     $('.navMenu li a').on('click',function(){
+		 var parent = $(this).parent().parent();//获取当前页签的父级的父级
+		 var labeul =$(this).parent("li").find(">ul");	 
+            if ($(this).parent().hasClass('open') == false) {
+               //展开未展开
+			   parent.find('ul').slideUp(300);
+			   parent.find("li").removeClass("open");
+			   parent.find('li a').removeClass("active").find(".arrow").removeClass("open");
+                 $(this).parent("li").addClass("open").find(labeul).slideDown(300);
+			  $(this).addClass("active").find(".arrow").addClass("open");
+           }else{
+			 $(this).parent("li").removeClass("open").find(labeul).slideUp(300);
+			  if($(this).parent().find("ul").length>0){
+				$(this).removeClass("active").find(".arrow").removeClass("open");
+			  }else{
+				$(this).addClass("active");
+			  }
+           }
+		 // 内容标签
+		 if ($(this).hasClass('openTheContent')) {
+			 var curId = $(this).attr("data-id");
+			 var isExist = $("#" + curId).attr("data-exist");
+			 var type = $(this).closest("ul").attr("data-type");
+			 if (isExist == 0) { // 若还没成功请求过这个组件/插件
+				 $("#" + curId).load(type, {"id": curId}, function(response,status,xhr) {
+					 if (status == "success") {
+						 $('.contentBlock').hide();
+						 $("#" + curId).fadeIn();
+						 $("#" + curId).attr("data-exist", "1");
+					 } else {
+						 alert('请求失败！');
+					 }
+				 });
+			 } else { // 已经请求过这个组件/插件
+				 $('.contentBlock').hide();
+				 $("#" + curId).fadeIn();
+			 }
+		 }
+    });
+     
+    // 默认打开第一个组件
+    $("#firstCom_1").click();
+    $("#firstCom_2").click();
+});
+/*]]>*/
+</script>
+</body>
+</html>

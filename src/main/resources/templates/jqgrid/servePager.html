@@ -1,0 +1,133 @@
+<article class="col-md-7">
+    <!-- 假form表单 -->
+    <form id="testForm" class="none"></form>
+    <section>
+        <table id="table3"></table>
+        <div id="table3Pager"></div>
+    </section>
+    <section class="table-code">
+        <h3>原始表格结构代码</h3><p>&nbsp;</p>
+    	<code>
+        &lt;div class="table-box"&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;table id="table3"&gt;&lt;/table&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;div id="table3Pager"&gt;&lt;/div&gt;<br/>
+        &lt;/div&gt;
+        </code>
+    </section>
+    <section class="tableHeaderCode">
+        <h3>表头数组</h3><p>&nbsp;</p>
+        <code>
+            [{"label":jqgAdapt.freezeHtml + "日期", "name": "date", "sortable": false},<br/>
+            {"label":"国家", "name": "country", "sortable": false},<br/>
+            {"label":"性格", "name": "character", "sortable": false},<br/>
+            {"label":"身高", "name": "height", "sortable": false},<br/>
+            {"label":"财富", "name": "wealth", "sortable": false},<br/>
+            {"label":"年龄", "name": "age"},<br/>
+            {"label":"车型", "name": "model", "sortable": false},<br/>
+            {"label":"操作", "name": "id", "sortable": false, "formatter": function(cellValue, options, data) {
+                return "&lt;button class='btn btn-success btn-sm'&gt;这是个按钮&lt;/button&gt;";
+            }}]
+        </code>
+    </section>
+</article>
+<aside class="col-md-5">
+    <section class="codeArea">
+        <pre id="table3FcCode" class="tableCodeArea">
+        </pre>
+    </section>
+</aside>
+<script>
+    /*<![CDATA[*/
+    // 更新表头数据
+    function updateHeader3() {
+        tableHeader = [{"label":jqgAdapt.freezeHtml + "日期", "name": "date", "sortable": false},
+            {"label":"国家", "name": "country", "sortable": false},
+            {"label":"性格", "name": "character", "sortable": false},
+            {"label":"身高", "name": "height", "sortable": false},
+            {"label":"财富", "name": "wealth", "sortable": false},
+            {"label":"年龄", "name": "age"},
+            {"label":"车型", "name": "model", "sortable": false},
+            {"label":"操作", "name": "id", "sortable": false, "formatter": function(cellValue, options, data) {
+                return "<button class='btn btn-success btn-sm'>这是个按钮</button>";
+            }}];
+    }
+
+    // 后台分页
+    function showTable3() {
+    var tableId = "table3";
+    var frozenTimes = 0;
+    $.jgrid.gridUnload(tableId);
+    $("#" + tableId).jqGrid({
+        colModel: tableHeader,
+        // 请求url
+        url: "jqgrid/serveTableData",
+        // 返回数据格式
+        datatype: "json",
+        // 请求方法
+        mtype: 'post',
+        
+        // ====== 2、请求参数为form表单对象 start
+        // 默认传入后台的参数：page: 当前页码；rows: 当前每页显示条数；sidx: 排序字段；sord: 排序方式（desc: 降序，asc: 升序）。
+        // 筛选：[name]=[value]。
+        postData: jqgAdapt.formToObj($('#testForm')),
+        // 请求参数为form表单对象 end
+        
+        styleUI: "Bootstrap",
+        autowidth:true,
+        altRows: true,
+        shrinkToFit: false,
+        height: 500,
+        pager: "#" + tableId + "Pager",
+        emptyrecords: "未查询到数据",
+        viewrecords: true,
+        rowNum: 10,
+        rowList: [10, 20, 50, 100],
+        beforeSelectRow: function (rowid, e) {
+            if (typeof($(e.target).closest('td')[0]) == 'undefined') {
+                return false;
+            } else {
+                var $myGrid = $(this), i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),
+                    cm = $myGrid.jqGrid('getGridParam', 'colModel');
+                return (cm[i].name === 'cb');
+            }
+        },
+        
+        // ====== 4、请求成功回调方法 start
+        loadComplete: function(msg) {
+        	if (frozenTimes == 0) {
+	            setTimeout(function() {jqgAdapt.setFrozenCol(tableId);}, 10);
+	            frozenTimes++;
+        	}
+        },
+        // 查询成功回调方法 end
+        
+        // ====== 5、请求失败回调方法 start
+        loadError: function(xhr,status,error) {
+            alert("数据查询失败，请稍候再试");
+        },
+        // 查询失败回调方法 end
+        
+        resizeStop: function() {
+            jqgAdapt.repairJqg(tableId, 500);
+        },
+        gridComplete:function(){
+            jqgAdapt.adjustSize(tableId, 500);
+        }
+    });
+    // 调用渲染多级表头方法
+    renderHeaders(tableId);
+}
+    
+    /**
+     * 渲染多级表头
+     */
+    function renderHeaders(el) { // ====== 渲染多级表头方法
+    var mulTableHeader = [];
+    mulTableHeader.push([
+        {startColumnName: 'country', numberOfColumns: 3, titleText: '基本操作'},
+        {startColumnName: 'wealth', numberOfColumns: 4, titleText: '勿6皆坐'}
+       ]);
+    jqgAdapt.addMulTableHeader(el, mulTableHeader);
+}
+/*]]>*/
+</script>

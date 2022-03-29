@@ -1,0 +1,47 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+	<label class="f16 db">1、checkbox</label>
+    <div class="s-checkbox refuse">
+        <input type="checkbox" id="checkbox1" name="checkbox" value="1" />
+        <label for="checkbox1"><b></b><span>选项一</span></label>
+    </div>
+    <div class="s-checkbox refuse">
+        <input type="checkbox" id="checkbox2" name="checkbox" value="2" />
+        <label for="checkbox2"><b></b><span>选项二</span></label>
+    </div><br/><br/>
+    <label class="f16 db">2、radio</label>
+    <div class="s-radio">
+        <input type="radio" id="radio1" name="radio" value="1" />
+        <label for="radio1"><b></b><span>是</span></label>
+    </div>
+    <div class="s-radio">
+        <input type="radio" id="radio2" name="radio" value="2" />
+        <label for="radio2"><b></b><span>否</span></label>
+    </div>
+    
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    <label class="f16">1、checkbox</label>
+    &lt;div class="s-checkbox refuse"&gt;
+        &lt;input type="checkbox" id="checkbox1" value="1" /&gt;
+        &lt;label for="checkbox1"&gt;&lt;b&gt;&lt;/b&gt;&lt;span&gt;选项一&lt;/span&gt;&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="s-checkbox refuse"&gt;
+        &lt;input type="checkbox" id="checkbox1" value="2" /&gt;
+        &lt;label for="checkbox1"&gt;&lt;b&gt;&lt;/b&gt;&lt;span&gt;选项二&lt;/span&gt;&lt;/label&gt;
+    &lt;/div&gt;
+    
+    <label class="f16">2、radio</label>
+    &lt;div class="s-radio"&gt;
+        &lt;input type="radio" id="radio1" value="1" /&gt;
+        &lt;label for="radio1"&gt;&lt;b&gt;&lt;/b&gt;&lt;span&gt;是&lt;/span&gt;&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="s-radio"&gt;
+        &lt;input type="radio" id="radio2" value="2" /&gt;
+        &lt;label for="radio2"&gt;&lt;b&gt;&lt;/b&gt;&lt;span&gt;否&lt;/span&gt;&lt;/label&gt;
+    &lt;/div&gt;
+    
+    <label style="color: #e66b6b;">注：此方案对于vue双向绑定交互友好</label>
+    <label style="color: #e66b6b;">&emsp;&emsp;若是红色框，则添加refuse</label>
+</pre>

@@ -1,0 +1,49 @@
+<div class="viewContent">
+    <span>使用bigUpload组件之前，要先引用，我们使用require.js来模块化的管理组件，所以除了引用vue相关的js外，我们还要引入requrie.js：</span>
+    <pre>&lt;script type="text/javascript" src="${Env.global_static_url}/js/require/require-2.3.6.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;</pre>
+    <span class="mt15 dilb">通过require来引入bigUpload组件：</span>
+    <pre>require(["big-upload"], function() {});</pre>
+    <span class="mt15 dilb">由于文件切片用到了web-worker技术来保证页面UI的流畅，此技术要求所依赖js必须与项目同源，所以使用之前需保证项目路径“js/big-upload/”中已存在如下js文件：</span>
+    <b class="db">calcMD5.js</b>
+    <b class="db">calcTotalMD5.js</b>
+    <b class="db">spark-md5.js</b>
+    <span class="mt15 dilb">若没有，请<a href="/js/big-upload.rar" download="大文件断点续传大礼包.rar">戳这里下载</a></span>
+</div>
+
+<label class="title f18">一、组件截图</label>
+<div class="viewContent">
+<p class="fb">业务文件列表：</p>
+<img src="img/file-list.png" width="889"/>
+<p class="fb">我已上传文件列表：</p>
+<img src="img/upload-list.png" width="889"/>
+<pre style="display: inline-block;">
+<label class="f16">HTML代码</label>
+&lt;big-upload :piece-size="1" class="mt15" :concurrency="2" :ensure-callback="checkSelectFile" :editable="isEditable" cus-title="&lt;i class='el-icon-files mr5'&gt;&lt;/i&gt;资源文件" :container-height="300" v-model="otherFileList"&gt;&lt;/big-upload&gt;
+
+<label class="cc00 f12">解释：</label>
+<span class="cc00 f12">1、piece-size为切片尺寸，单位为兆，此项若不配置，默认为1</span>
+<span class="cc00 f12">2、concurrency为文件上传时允许请求并发最大数（不包含检验文件是否已上传请求以及轮询后台上传upyun进度请求，故实际值会略大于此配置值），此项若不配置，默认为4</span>
+<span class="cc00 f12">3、cus-title为业务场景的title描述，可配置html字符串，此项若不配置，默认为“文件”</span>
+<span class="cc00 f12">4、container-height为业务场景已选取文件容器的最大高度，超出将滚动，此项若不配置，默认为200</span>
+<span class="cc00 f12">5、v-model为业务场景的文件列表与组件双向绑定的配置，此项为必配项，详细数据结构请查看下面“JS代码”</span>
+<span class="cc00 f12">6、editable为配置次组件是否可编辑，此项若不配置，默认为true</span>
+<span class="cc00 f12">7、ensure-callback为配置已上传列表中的确定按钮回调事件，值为函数，回调函数的参数为已上传列表中勾选的文件数组，此函数若返回true则正常添加勾选中的文件，返回false则不添加，此项若不配置，默认的函数返回true</span>
+
+<label class="f16">JS代码</label>
+require(["big-upload"], function() {
+    new Vue({
+        el: "#app",
+        data: {
+            isEditable: true,
+            otherFileList:[
+                {bytes: 121078677, md5: "4f45d5b470956e51270f0ab79a8b5de6", name: "element-ui.rar", url: "/HISP/STORE/BIGFILE/COMPLETE/4f45d5b470956e51270f0ab79a8b5de6.RAR"},
+                {bytes: 1268, md5: "cbbb4ddb1165bb58e0076210cdff7efa", name: "Makefile", url: "/HISP/STORE/BIGFILE/COMPLETE/cbbb4ddb1165bb58e0076210cdff7efa.MAKEFILE"},
+                {bytes: 9216590, md5: "4ba3913b4eafb4f99cbac5dd27f6d8ed", name: "2018-11-22晨会材料-孙云鹏.pptx", url: "/HISP/STORE/BIGFILE/COMPLETE/4ba3913b4eafb4f99cbac5dd27f6d8ed.PPTX"}
+            ]
+        }
+    });
+});
+</pre>
+</div>
+
+

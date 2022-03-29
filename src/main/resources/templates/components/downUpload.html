@@ -1,0 +1,113 @@
+<label class="title f18">一、展示效果</label>
+<!-- 上传Excel的模态框 -->
+<div class="modal fade" id="uploadProModal" tabindex="-1" role="dialog" aria-labelledby="uploadProModalLabel" aria-hidden="false" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="f18 c111">上传预算产品条码数据</span>
+                <a href="javascript:;" class="fb ml5" id='downLoadProBasicBtn' onclick='downLoadProBasicExcel(this)' data-html="下载商品导入EXCEL" data-loading="正在下载...">下载商品导入EXCEL</a>
+            </div>
+            <form id="uploadProModalForm">
+                <div class="modal-body">
+                    <label class="">选择批量导入的Excel：</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control filePath" placeholder="请选择文件" readonly="readonly" />
+                        <input type="file" class="hide fileSelf" name="uploadExcel" id="uploadProFile" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger removeFile"><i class="fa fa-times mr5"></i>移除</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-circle-o-notch fa-fw mr5"></i>取消</button>
+                    <button type="submit" class="btn btn-primary" id="submitUploadProBtn"><i class="fa fa-send mr5"></i>提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="viewContent">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadProModal">打开模态框</button>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;!-- 上传Excel的模态框 --&gt;
+    &lt;div class="modal fade" id="uploadProModal" tabindex="-1" role="dialog" aria-labelledby="uploadProModalLabel" aria-hidden="false" data-backdrop="static" data-keyboard="false"&gt;
+        &lt;div class="modal-dialog"&gt;
+            &lt;div class="modal-content"&gt;
+                &lt;div class="modal-header"&gt;
+                    &lt;span class="f18 c111"&gt;上传预算产品条码数据&lt;/span&gt;
+                    &lt;a href="javascript:;" class="fb ml5" id='downLoadProBasicBtn' onclick='downLoadProBasicExcel(this)' data-html="下载商品导入EXCEL" data-loading="正在下载..."&gt;下载商品导入EXCEL&lt;/a&gt;
+                &lt;/div&gt;
+                &lt;form id="uploadProModalForm"&gt;
+                    &lt;div class="modal-body"&gt;
+                        &lt;label class=""&gt;选择批量导入的Excel：&lt;/label&gt;
+                        &lt;div class="input-group"&gt;
+                            &lt;input type="text" class="form-control filePath" placeholder="请选择文件" readonly="readonly" /&gt;
+                            &lt;input type="file" class="hide fileSelf" name="uploadExcel" id="uploadProFile" /&gt;
+                            &lt;span class="input-group-btn"&gt;
+                                &lt;button type="button" class="btn btn-danger removeFile"&gt;&lt;i class="fa fa-times mr5"&gt;&lt;/i&gt;移除&lt;/button&gt;
+                            &lt;/span&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="modal-footer"&gt;
+                        &lt;button type="button" class="btn btn-default" data-dismiss="modal"&gt;&lt;i class="fa fa-circle-o-notch fa-fw mr5"&gt;&lt;/i&gt;取消&lt;/button&gt;
+                        &lt;button type="submit" class="btn btn-primary" id="submitUploadProBtn"&gt;&lt;i class="fa fa-send mr5"&gt;&lt;/i&gt;提交&lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/form&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+</pre>
+<label class="title f18">三、JS代码</label> 
+<pre>
+    <label style="color: #e66b6b; margin-bottom: 0;">下载a标签loading：</label>
+    $(el).html($(el).attr('data-loading') || '正在下载...').addClass('disabled-a');
+    
+    <label style="color: #e66b6b; margin-bottom: 0;">下载a标签恢复：</label>
+    $(el).html($(el).attr('data-html') || '下载模板').removeClass('disabled-a');
+    
+    <label style="color: #e66b6b; margin-bottom: 0;">上传控件需要的js代码：</label>
+    // 选择文件
+    $('input.filePath').on('click', function() {
+        $(this).next('input').click();
+    });
+    
+    // input文件输入框添加change监听事件
+    $('input[name="uploadExcel"]').on('change', function(event) {
+        $(this).prev('input[type="text"]').val(event.currentTarget.files[0].name);
+    });
+    
+    // 移除选择过的文件
+    $('button.removeFile').on('click', function() {
+        $(this).closest('.input-group').find('input').val('');
+    });
+</pre>
+<script>
+    /*<![CDATA[*/
+    // 选择文件
+    $('input.filePath').on('click', function() {
+        $(this).next('input').click();
+    });
+    
+    // input文件输入框添加change监听事件
+    $('input[name="uploadExcel"]').on('change', function(event) {
+        $(this).prev('input[type="text"]').val(event.currentTarget.files[0].name);
+    });
+    
+    // 移除选择过的文件
+    $('button.removeFile').on('click', function() {
+        $(this).closest('.input-group').find('input').val('');
+    });
+    
+    /**
+     * 假下载
+     */
+    function downLoadProBasicExcel(el) {
+        $(el).html($(el).attr('data-loading') || '正在下载...').addClass('disabled-a');
+        setTimeout(function() {
+            $(el).html($(el).attr('data-html') || '下载模板').removeClass('disabled-a');
+        }, 1000);
+    }
+    /*]]>*/
+</script>

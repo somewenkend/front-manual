@@ -1,0 +1,137 @@
+<style>
+div[id*=searchLoadData_]{position: absolute; display: none;  z-index: 200; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
+div[id*=searchLoadData_] div.searchLoadDataBox{width: 200px; height:120px; position: absolute; left: 50%; margin-left: -100px; top: 50%; margin-top: -50px; text-align: center; overflow: hidden; border-radius:10px; color: #fff;}
+.sk-spinner-chasing-dots.sk-spinner{margin-bottom: 40px;}
+.loading-box{height: 500px; position: relative; border: 1px solid #ddd; display: flex; justify-content: center; align-items: center;}
+.loading-box > span{font-size: 30px; font-weight: bold; color: #ddd;}
+</style>
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <div class="row mb15">
+        <div class="col-md-4">
+            <input type="range" data-id="1" class="mb15" value="3" min="1" max="100" step="2" />
+            <button type="button" class="btn btn-success btn-sm" onclick="startCountdownSection(this, 1);">模拟请求时间：<span class="curTimes" style="color: #ffed00;font-size: 16px;font-weight: bold;">3</span>s，点我试试</button>
+        </div>
+        <div class="col-md-4">
+            <input type="range" data-id="2" class="mb15" value="3" min="1" max="100" step="2" />
+            <button type="button" class="btn btn-success btn-sm" onclick="startCountdownSection(this, 2);">模拟请求时间：<span class="curTimes" style="color: #ffed00;font-size: 16px;font-weight: bold;">3</span>s，点我试试</button>
+        </div>
+        <div class="col-md-4">
+            <input type="range" data-id="3" class="mb15" value="3" min="1" max="100" step="2" />
+            <button type="button" class="btn btn-success btn-sm" onclick="startCountdownSection(this, 3);">模拟请求时间：<span class="curTimes" style="color: #ffed00;font-size: 16px;font-weight: bold;">3</span>s，点我试试</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="loading-box">
+                <span>遮罩显示区</span>
+                <div id="searchLoadData_1" class="searchLoadData"><div class="searchLoadDataBox"><div class="sk-spinner sk-spinner-chasing-dots"><div class="sk-dot1"></div><div class="sk-dot2"></div></div>正在加载数据<span class="loadingTime"></span></div></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="loading-box">
+                <span>遮罩显示区</span>
+                <div id="searchLoadData_2" class="searchLoadData"><div class="searchLoadDataBox"><div class="sk-spinner sk-spinner-chasing-dots"><div class="sk-dot1"></div><div class="sk-dot2"></div></div>正在加载数据<span class="loadingTime"></span></div></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="loading-box">
+                <span>遮罩显示区</span>
+                <div id="searchLoadData_3" class="searchLoadData"><div class="searchLoadDataBox"><div class="sk-spinner sk-spinner-chasing-dots"><div class="sk-dot1"></div><div class="sk-dot2"></div></div>正在加载数据<span class="loadingTime"></span></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<label class="title f18">二、使用方法</label>
+<pre>
+    <label class="f16">1、在常规的遮罩html中添加"&lt;span class="loadingTime"&gt;&lt;/span&gt;",例如：</label>
+        &lt;div id="searchLoadData_1" class="searchLoadData"&gt;
+            &lt;div class="searchLoadDataBox"&gt;
+                &lt;div class="sk-spinner sk-spinner-chasing-dots"&gt;
+                    &lt;div class="sk-dot1"&gt;&lt;/div&gt;
+                    &lt;div class="sk-dot2"&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                正在加载数据<span style="color: #e66b6b;">&lt;span class="loadingTime"&gt;&lt;/span&gt;</span>
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div id="searchLoadData_2" class="searchLoadData"&gt;
+            &lt;div class="searchLoadDataBox"&gt;
+                &lt;div class="sk-spinner sk-spinner-chasing-dots"&gt;
+                    &lt;div class="sk-dot1"&gt;&lt;/div&gt;
+                    &lt;div class="sk-dot2"&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                正在加载数据<span style="color: #e66b6b;">&lt;span class="loadingTime"&gt;&lt;/span&gt;</span>
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div id="searchLoadData_3" class="searchLoadData"&gt;
+            &lt;div class="searchLoadDataBox"&gt;
+                &lt;div class="sk-spinner sk-spinner-chasing-dots"&gt;
+                    &lt;div class="sk-dot1"&gt;&lt;/div&gt;
+                    &lt;div class="sk-dot2"&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                正在加载数据<span style="color: #e66b6b;">&lt;span class="loadingTime"&gt;&lt;/span&gt;</span>
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+    <label class="f16">2、将步骤1中的遮罩html放在要遮住的容器内部，使其成为容器的子元素，容器需要添加class="pr"。例如要遮住id为table的元素：</label>
+        &lt;div id="table" class="pr"&gt;
+            &lt;div id="searchLoadData_1" class="searchLoadData"&gt;
+                &lt;div class="searchLoadDataBox"&gt;
+                    &lt;div class="sk-spinner sk-spinner-chasing-dots"&gt;
+                        &lt;div class="sk-dot1"&gt;&lt;/div&gt;
+                        &lt;div class="sk-dot2"&gt;&lt;/div&gt;
+                    &lt;/div&gt;
+                    正在加载数据<span style="color: #e66b6b;">&lt;span class="loadingTime"&gt;&lt;/span&gt;</span>
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+    <label class="f16">3、遮罩显示方法（startPageLoadingTimer方法的参数是倒计时的时长，默认是60，单位是s）</label>
+        $('#searchLoadData_1').show(1, function() {createCountDown(this, 5);});
+        
+        $('#searchLoadData_2').show(1, function() {createCountDown(this, 5);});
+        
+        $('#searchLoadData_3').show(1, function() {createCountDown(this, 5);});
+        
+    <label class="f16">4、遮罩隐藏方法</label>
+        $('#searchLoadData_1').hide(1, function() {resetCurCountDown(this);});
+        
+        $('#searchLoadData_2').hide(1, function() {resetCurCountDown(this);});
+        
+        $('#searchLoadData_3').hide(1, function() {resetCurCountDown(this);});
+</pre>
+<script>
+    /*<![CDATA[*/
+    var curTimes_1 = 3;var curTimes_2 = 3;var curTimes_3 = 3;
+    $('input[type="range"]').on('input', function() {
+        if ($(this).attr('data-id') == 1) {
+            curTimes_1 = $(this).val();
+        } else if($(this).attr('data-id') == 2) {
+            curTimes_2 = $(this).val();
+        } else {
+            curTimes_3 = $(this).val();
+        }
+        $(this).next('button').find('span').text($(this).val());
+    });
+    
+    function startCountdownSection(el, id) {
+        var curTimes = 0;
+        if (id == 1) {
+            curTimes = curTimes_1;
+        } else if(id == 2) {
+            curTimes = curTimes_2;
+        } else {
+            curTimes = curTimes_3;
+        }
+        $(el).button('loading');
+        $('#searchLoadData_' + id).show(1, function() {createCountDown(this, 5);});
+        setTimeout(function() {
+            $('#searchLoadData_' + id).hide(1, function() {resetCurCountDown(this);});
+            $(el).button('reset');
+            $(el).find('span').text(curTimes);
+           }, curTimes*1000);
+    }
+    /*]]>*/
+</script>

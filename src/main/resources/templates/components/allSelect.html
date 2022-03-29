@@ -1,0 +1,61 @@
+<label class="title f18">一、展示效果（适用于完全意义上的全选，不适用于类似角色赋权那样的特殊全选）</label>
+<div class="viewContent" id="allselect_content">
+<div class="checkboxGroup">
+    <label class="i-checks f14 mr20 cp"><input type="checkbox" value="-1" name="topDataTypeAllSelect" data-role="allSelect" /><span class="fb">选择统计数据(全选)</span></label>
+    <div class="childCheckbox row ml15">
+        <label class="i-checks col-md-2 cp"><input type="checkbox" value="19" name="topDataType" /><span>首页负评占比</span></label>
+        <label class="i-checks col-md-2 cp"><input type="checkbox" value="4" name="topDataType" /><span>售后费用（含客满短信）占比</span></label>
+        <label class="i-checks col-md-2 cp"><input type="checkbox" value="22" name="topDataType" /><span>售后费用</span></label>
+        <label class="i-checks col-md-2 cp"><input type="checkbox" value="20" name="topDataType" /><span>服装退货率</span></label>
+    </div>
+</div>
+</div>
+<label class="title f18">二、HTML代码</label> 
+<pre id="allselest_code">
+	<span class="clipboard" id="allselest_copy" data-clipboard-action="copy" data-clipboard-text=""><i class="fa fa-copy mr5"></i>一键复制</span>
+    &lt;div class="checkboxGroup"&gt;
+        &lt;label class="i-checks f14 mr20 cp"&gt;&lt;input type="checkbox" value="-1" name="topDataTypeAllSelect" data-role="allSelect" /&gt;&lt;span class="fb"&gt;选择统计数据(全选)&lt;/span&gt;&lt;/label&gt;
+        &lt;div class="childCheckbox row"&gt;
+            &lt;label class="i-checks col-md-3 cp"&gt;&lt;input type="checkbox" value="19" name="topDataType" /&gt;&lt;span&gt;首页负评占比&lt;/span&gt;&lt;/label&gt;
+            &lt;label class="i-checks col-md-3 cp"&gt;&lt;input type="checkbox" value="4" name="topDataType" /&gt;&lt;span&gt;售后费用（含客满短信）占比&lt;/span&gt;&lt;/label&gt;
+            &lt;label class="i-checks col-md-3 cp"&gt;&lt;input type="checkbox" value="22" name="topDataType" /&gt;&lt;span&gt;售后费用&lt;/span&gt;&lt;/label&gt;
+            &lt;label class="i-checks col-md-3 cp"&gt;&lt;input type="checkbox" value="20" name="topDataType" /&gt;&lt;span&gt;服装退货率&lt;/span&gt;&lt;/label&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+</pre>
+<script>
+    /*<![CDATA[*/
+    $('#allselest_copy').attr('data-clipboard-text', $('#allselect_content').html());
+    var clipboard = new Clipboard('#allselest_copy');
+    clipboard.on('success', function(e) {
+		alert('已复制到剪贴板！');
+    });
+    $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green"});
+     // checkbox的全选功能
+    if ($('.checkboxGroup').length > 0) {
+        //全选/全不选事件
+        $('.checkboxGroup').on('ifClicked', 'input[type="checkbox"][data-role="allSelect"]', function() {
+            var $brotherCheckboxs = $(this).closest('.checkboxGroup').find('input[type="checkbox"]');
+            if($(this).is(':checked')) {
+                $brotherCheckboxs.iCheck('uncheck');
+            } else {
+                $brotherCheckboxs.iCheck('check');
+            }
+        });
+        // 反向全选/全不选事件
+        $('.checkboxGroup').on('ifChanged', '.childCheckbox input[type="checkbox"]', function() {
+            var $allSelect = $(this).closest('.checkboxGroup').find('input[type="checkbox"][data-role="allSelect"]');
+            if($(this).is(':checked')) {
+                var $parentDiv = $(this).closest('.childCheckbox');
+                if($parentDiv.find('input[type="checkbox"]:checked').length == $parentDiv.find('input[type="checkbox"]').length) {
+                    $allSelect.iCheck('check');
+                } else {
+                    $allSelect.iCheck('uncheck');
+                }
+            } else {
+                $allSelect.iCheck('uncheck');
+            }
+        });
+    }
+    /*]]>*/
+</script>

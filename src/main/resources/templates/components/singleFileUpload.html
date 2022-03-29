@@ -1,0 +1,55 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <div class="input-group">
+        <input type="text" class="form-control filePath" placeholder="请选择文件" readonly="readonly" />
+        <input type="file" class="hide fileSelf" accept="image/*, .pdf" name="orderEnsure" />
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-danger removeFile"><i class="fa fa-times mr5"></i>移除</button>
+        </span>
+    </div>
+</div>
+<label class="title f18">二、HTML代码</label> 
+<pre>
+    &lt;div class="input-group"&gt;
+        &lt;input type="text" class="form-control filePath" placeholder="请选择文件" readonly="readonly" /&gt;
+        &lt;input type="file" class="hide fileSelf" accept="image/*, .pdf" name="orderEnsure" /&gt;
+        &lt;span class="input-group-btn"&gt;
+            &lt;button type="button" class="btn btn-danger removeFile"&gt;&lt;i class="fa fa-times mr5"&gt;&lt;/i&gt;移除&lt;/button&gt;
+        &lt;/span&gt;
+    &lt;/div&gt;
+</pre>
+<label class="title f18">三、JS代码</label> 
+<pre>
+    // 选择文件
+    $('input.filePath').on('click', function() {
+        $(this).next('input').click();
+    });
+    
+    // input文件输入框添加change监听事件
+    $('input[name="orderEnsure"]').on('change', function(event) {
+        $(this).prev('input[type="text"]').val(event.currentTarget.files[0].name);
+    });
+    
+    // 移除选择过的文件
+    $('button.removeFile').on('click', function() {
+        $(this).closest('.input-group').find('input').val('');
+    });
+</pre>
+<script>
+    /*<![CDATA[*/
+    //选择文件
+    $('input.filePath').on('click', function() {
+        $(this).next('input').click();
+    });
+    
+    // input文件输入框添加change监听事件
+    $('input[name="orderEnsure"]').on('change', function(event) {
+        $(this).prev('input[type="text"]').val(event.currentTarget.files[0].name);
+    });
+    
+    // 移除选择过的文件
+    $('button.removeFile').on('click', function() {
+        $(this).closest('.input-group').find('input').val('');
+    });
+    /*]]>*/
+</script>

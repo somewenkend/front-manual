@@ -1,0 +1,43 @@
+<style>
+    .searchOptionsNav{position: relative;}
+</style>
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <div class="searchOptionsNav" style="padding: 15px;">
+        <form id="searchForm">
+            <p class="tr">
+                <button type="button" class="btn btn-success" data-toggle="collapse" data-target="#collapseChannelChange" aria-expanded="false" aria-controls="collapseChannelChange" id="collapseChannelChangeBtn">
+                    <i class="fa fa-fw fa-search mr5"></i>自定义查询
+                </button>
+            </p>
+            <div class="btnGroupBox form-inline">
+            直接展示的查询条件
+               </div>
+            <!-- 渠道 -->
+           <div class="collapse" id="collapseChannelChange">
+               折叠区域的查询条件
+               <button type="submit" id="searchBtn" class="btn btn-success btn-block" onclick="searchData()"><i class="fa fa-search mr5"></i>执行查询</button>
+            </div>
+        </form>
+    </div>
+</div>
+<label class="title f18">二、HTML代码</label> 
+<pre>
+    &lt;div class="searchOptionsNav" style="padding: 15px;"&gt;
+        &lt;form id="searchForm"&gt;
+            &lt;p class="tr"&gt;
+                &lt;button type="button" class="btn btn-success" data-toggle="collapse" data-target="#collapseChannelChange" aria-expanded="false" aria-controls="collapseChannelChange" id="collapseChannelChangeBtn"&gt;
+                    &lt;i class="fa fa-fw fa-search mr5"&gt;&lt;/i&gt;自定义查询
+                &lt;/button&gt;
+            &lt;/p&gt;
+            &lt;div class="btnGroupBox form-inline"&gt;
+            直接展示的查询条件
+               &lt;/div&gt;
+            &lt;!-- 渠道 --&gt;
+           &lt;div class="collapse" id="collapseChannelChange"&gt;
+               折叠区域的查询条件
+               &lt;button type="submit" id="searchBtn" class="btn btn-success btn-block" onclick="searchData()"&gt;&lt;i class="fa fa-search mr5"&gt;&lt;/i&gt;执行查询&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;  
+</pre>

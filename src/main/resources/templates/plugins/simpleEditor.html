@@ -1,0 +1,69 @@
+<link rel="stylesheet" type="text/css" href="/plugIn/simple-editor/simpleeditor.css" />
+<style>.viewContent{background-color: #fff;}</style>
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <div id="editor"></div>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;div id="editor"&gt;&lt;/div&gt;
+</pre>
+<label class="title f18">三、引入CSS文件</label>
+<pre>
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/plugIn/simple-editor/simpleeditor.css?v=${Env.global_css_version!}" /&gt;
+</pre>
+<label class="title f18">四、引入JS文件</label>
+<pre>
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/simple-editor/simpleeditor.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+</pre>
+<label class="title f18">五、用法</label>
+<pre>
+<h1 class="fb f20">前端：</h1>
+    一、实例化一个插件对象：
+    <b>var editor = new SimpleEditor(elId, option);</b>
+    
+    elId为容器id;
+    option为配置项，可配置属性如下：
+    option = {
+        height: 300, // 编辑器高度，默认为300
+        insertAttach: true, // 默认允许插入附件
+        insertImage: true, // 默认允许插入图片
+        requestUrl: "", // 默认请求路径
+        postData: {} // 默认提交后台的数据
+    }
+    
+    二、注意事项：
+    1、option至少需要传一个请求路径
+    2、后台接收的文件name默认为"multipleFile"
+
+<h1 class="fb f20">后端：（利用MultipartHttpServletRequest来接收前台传过来的文件）</h1>
+    需传参数:HttpServletRequest request
+    
+    UpYunEncryption upYunEncryption = new UpYunEncryption(); // new一个又拍云加密上传对象
+    MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request; // 将HttpServletRequest转换为MultipartHttpServletRequest
+    List&lt;MultipartFile&gt; multiFileList = multipartRequest.getFiles("multipleFile"); // 上传控件的name固定是multipleFile
+    int size = multiFileList.size();
+    List&lt;Map&lt;String, String&gt;&gt; fileList = new ArrayList&lt;Map&lt;String,String&gt;&gt;();
+    for(int i=0;i&lt;size;i++){
+        MultipartFile file = multiFileList.get(i);
+        // 获取上传后的upyun存储路径（Env.TEST_EDIT_FILE_UPYUN_FLIE_STORE:根据需要自己配置上传到upyun上的路径）
+        String fileUrl = upYunEncryption.uploadReturnUrl(file.getOriginalFilename(), Env.TEST_EDIT_FILE_UPYUN_FLIE_STORE + "U" + user.getId() + "/", file.getBytes());
+        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();
+        map.put("name", file.getOriginalFilename());
+        map.put("url", upYunEncryption.getTimeLimitUrl(fileUrl));
+        fileList.add(map);
+    }
+    JSONObject returnJson=new JSONObject();
+    returnJson.put("data", fileList);
+    result = gson.toJson(returnJson);
+</pre>
+<script type="text/javascript" src="/plugIn/simple-editor/simpleeditor.js"></script>
+<script>
+/*<![CDATA[*/
+$(document).ready(function() {
+    var editor = new SimpleEditor("editor", {
+        requestUrl: "/testUploadMapping"
+    });
+});
+/*]]>*/
+</script>

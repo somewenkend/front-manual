@@ -1,0 +1,80 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <label class="f16 db">1、标签和表单元素竖向排列</label>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label>标签1：</label>
+            <input class="form-control" placeholder="请输入1" />
+        </div>
+        <div class="form-group col-md-4">
+            <label>标签2：</label>
+            <input class="form-control" placeholder="请输入2" />
+        </div>
+        <div class="form-group col-md-4">
+            <label>标签3：</label>
+            <input class="form-control" placeholder="请输入3" />
+        </div>
+    </div><br/>
+    <label class="f16 db">2、标签和表单元素横向排列</label>
+    <div class="row">
+        <div class="form-group col-md-4 form-horizon">
+            <label>标签1：</label>
+            <input class="form-control" placeholder="请输入1" />
+        </div>
+        <div class="form-group col-md-4 form-horizon">
+            <label>标签2：</label>
+            <input class="form-control" placeholder="请输入2" />
+        </div>
+        <div class="form-group col-md-4 form-horizon">
+            <label>标签3：</label>
+            <input class="form-control" placeholder="请输入3" />
+        </div>
+        <div class="form-group col-md-4 form-horizon">
+            <label>&emsp;签4：</label>
+            <input class="form-control" placeholder="请输入4" />
+        </div>
+    </div>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    <label class="f16">1、标签和表单元素竖向排列</label>
+    &lt;div class="row"&gt;
+        &lt;div class="form-group col-md-4"&gt;
+            &lt;label&gt;标签1：&lt;/label&gt;
+            &lt;input class="form-control" placeholder="请输入1" /&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group col-md-4"&gt;
+            &lt;label&gt;标签2：&lt;/label&gt;
+            &lt;input class="form-control" placeholder="请输入2" /&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group col-md-4"&gt;
+            &lt;label&gt;标签3：&lt;/label&gt;
+            &lt;input class="form-control" placeholder="请输入3" /&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    <label class="f16">2、标签和表单元素横向排列</label>
+    &lt;div class="row"&gt;
+        &lt;div class="form-group col-md-4 form-horizon"&gt;
+            &lt;label&gt;标签1：&lt;/label&gt;
+            &lt;input class="form-control" placeholder="请输入1" /&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group col-md-4 form-horizon"&gt;
+            &lt;label&gt;标签2：&lt;/label&gt;
+            &lt;input class="form-control" placeholder="请输入2" /&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group col-md-4 form-horizon"&gt;
+            &lt;label&gt;标签3：&lt;/label&gt;
+            &lt;input class="form-control" placeholder="请输入3" /&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group col-md-4 form-horizon"&gt;
+            &lt;label&gt;&emsp;签4：&lt;/label&gt;
+            &lt;input class="form-control" placeholder="请输入3" /&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    <label style="color: #e66b6b;">横向排列时，要求标签冒号对齐，采用在较短的标签前面插入空占位符来实现对齐，如下：</label>
+    <span style="color: #e66b6b;">&amp;emsp;</span>：一个中文的位置；
+    <span style="color: #e66b6b;">&amp;ensp;</span>：半个中文的位置；
+    <span style="color: #e66b6b;">&amp;nbsp;</span>：一个空格的位置；
+</pre>

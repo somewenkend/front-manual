@@ -1,0 +1,48 @@
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label>check必填项和正整数<b style="color: #c0392b">*</b>：</label>
+            <input class="form-control" necessary="true" inputcheck="1" placeholder="请输入正整数" />
+        </div>
+        <div class="form-group col-md-4">
+            <label>check至多保留两位的小数：</label>
+            <input class="form-control" inputcheck="3-2" placeholder="请输入至多保留两位的小数" />
+        </div>
+        <div class="form-group col-md-4">
+            <label>check输入长度：</label>
+            <input class="form-control" maxsize="10" placeholder="请输入最大长度为10的字符串" />
+        </div>
+    </div>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;div class="row"&gt;
+        &lt;div class="form-group col-md-4"&gt;
+            &lt;label&gt;check必填项和正整数&lt;span class="cc0392b"&gt;*&lt;/span&gt;：&lt;/label&gt;
+            &lt;input class="form-control" <span style="color: #e66b6b;">necessary inputcheck="1"</span> placeholder="请输入正整数" /&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group col-md-4"&gt;
+            &lt;label&gt;check至多保留两位的小数：&lt;/label&gt;
+            &lt;input class="form-control" <span style="color: #e66b6b;">inputcheck="3-2"</span> placeholder="请输入至多保留两位的小数" /&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group col-md-4"&gt;
+            &lt;label&gt;check输入长度：&lt;/label&gt;
+            &lt;input class="form-control" <span style="color: #e66b6b;">maxsize="10"</span> placeholder="请输入最大长度为10的字符串" /&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    <label>1、若input框为必填项，请添加necessary属性；非空验证可与输入数据格式的验证结合使用。</label>
+    <label>2、输入数据格式的验证需要为input框添加inputcheck属性，属性值解释如下：</label>
+    <b>"0"</b>：整数（包含正整数和负整数）
+    <b>"1"</b>：正整数
+    <b>"2"</b>：负整数
+    <b>"3-2"</b>：小数（包含正小数和负小数；‘-’后面为最多可保留的位数，可根据业务场景自由设置，此处即最多保留两位的小数）
+    <b>"4-3"</b>：正小数
+    <b>"5-2"</b>：负小数
+    <b>"mail"</b>：邮箱
+    <b>"phone"</b>：手机号码
+    <label>3、输入最大长度验证需要为input框添加maxsize属性，属性值为最大允许输入长度</label>
+    
+    <label style="color: #e66b6b;">注：1、以上数据格式check中，小数兼容整数！<br/>     &ensp;2、提交之前调用validCheck($el)，参数为所要提交元素的外围容器jquery对象，若容器内含有非法输入，则页面滚动到第一个非法输入位置并返回false，反之返回true。</label>
+</pre>

@@ -1,0 +1,249 @@
+<link rel="stylesheet" type="text/css" href="/plugIn/dateTime/fullcalendar/fullcalendar.min.css"/>
+<link rel="stylesheet" type="text/css" href="/plugIn/dateTime/fullcalendar/fullcalendar.print.min.css" media="print" />
+<label class="title f18">一、展示效果</label>
+<div class="viewContent" style="height: 550px; background-color: #fff; overflow: auto;">
+    <div id="calendar"></div>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;div id="calendar"&gt;&lt;/div&gt;
+</pre>
+<label class="title f18">三、引入CSS文件</label>
+<pre>
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/plugIn/dateTime/fullcalendar/fullcalendar.min.css?v=${Env.global_css_version!}"/&gt;
+    &lt;link rel="stylesheet" type="text/css" href="${Env.global_static_url}/plugIn/dateTime/fullcalendar/fullcalendar.print.min.css?v=${Env.global_css_version!}" media="print" /&gt;
+</pre>
+<label class="title f18">四、引入JS文件</label>
+<pre>
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/dateTime/fullcalendar/moment.min.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/dateTime/fullcalendar/fullcalendar.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+</pre>
+<label class="title f18">五、用法（参考网站：<a target="_blank" href="https://www.helloweba.net/javascript/445.html">https://www.helloweba.net/javascript/445.html</a>）</label> 
+<pre>
+    <label style="color: #e66b6b;">1、日历控件初始化</label>
+    $("#calendar").fullCalendar({ // 初始化日历控件
+        header: {
+            left: "prev,next today", // 翻页+今天
+            center:"title",
+            right:"month,agendaWeek,agendaDay,listMonth,listWeek,listDay"
+        },
+        // defaultView: "listDay", // 设置初始化视图，默认'month'
+        weekNumbers: true, // 是否在日历中显示周次
+        weekNumbersWithinDays: true, // 月视图中显示周数的样式
+        weekNumberCalculation: "ISO", // 周次的显示格式
+        showNonCurrentDates:true, // 不属于本月的天是否样式是否一致
+        fixedWeekCount:false, // 是否固定月视图中的周数为6周
+        nowIndicator:true, // 是否显示指示当前时间的标记
+        navLinks: true,//允许周、日点击跳转不同视图
+        editable: true,//允许拖拽和改变日程区间
+        eventDurationEditable: false,//允许改变日程区间
+        eventLimit: false, //显示更多按钮
+        slotEventOverlap:false,//周/日视图上的事件不会重叠显示
+        timeFormat: "HH:mm:ss", // 设置每个事件的时间格式
+        axisFormat: "HH:mm:ss", // 时间轴的时间格式
+        height: $(window).height()-166, // 日历控件的高度
+        loading: function(bool) { // 当获取数据开始和结束的时候触发
+            $("#searchLoadData").toggle(bool);
+        },
+        // 日程数据加载
+        events: function(start, end, timezone, callback) {
+            $.ajax({
+                type: "POST",
+                data: {},
+                url: "schedule.json",
+                dataType: "json",
+                timeout : 60000,
+                success: function(msg){
+                    // 渲染日程对象数组（初始化日程数据）
+                    callback(msg.events); 
+                },
+                error: function(xml, mess){
+                    alertCountDown(5,"通讯失败，请重试！");
+                }
+            });
+        },
+        // 鼠标悬停日程事件
+        eventMouseover: function( event, jsEvent, view ) {
+         $(this).css('background-color', '#00bcd4');
+        },
+        // 鼠标移开日程事件
+        eventMouseout: function( event, jsEvent, view ) {
+         $(this).css('background-color', '#1caf9a');
+        },
+        // 点击添加日程（select方法可替代）
+        // dayClick: function(date, jsEvent, view) {
+        // alert("您点击了这一天：" + date);
+        // },
+        // 日程点击事件
+        eventClick: function(obj, jsEvent, view) {
+         alert("您点击了这个日程，id为：" + obj.id);
+        },
+        // 跨时间选择配置项
+        selectable: true, // 是否允许用户单击或者拖拽日历中的天和时间隙
+        selectHelper: true, // 设置是否在用户拖拽事件的时候绘制占位符
+        select: function(start, end) { // 在日历中选择某个时间之后触发该回调函数
+            alert("您选择的时间段是：" + start + "到" + end);
+        },
+        // 当拖拽完成并且时间改变时触发
+        eventDrop: function(obj, delta, revertFunc, jsEvent, ui, view ) {
+            if(!confirm('确定要调整此日程？')) {
+             revertFunc();
+            }
+        }
+    });
+    
+    <label style="color: #e66b6b;">2、日程对象：</label>
+    <table style="margin-left: 30px;">
+        <tbody>
+            <tr class="table_title">
+                <td width="20%">属性</td>
+                <td>描述</td>
+            </tr>
+            <tr>
+                <td align="center">id</td>
+                <td>可选，事件唯一标识，重复的事件具有相同的id</td>
+            </tr>
+            <tr>
+                <td align="center">title</td>
+                <td>必须，事件在日历上显示的title</td>
+            </tr>
+            <tr>
+                <td align="center">allDay</td>
+                <td>可选，true or false，是否是全天事件。</td>
+            </tr>
+            <tr>
+                <td align="center">start</td>
+                <td>必须，事件的开始时间。</td>
+            </tr>
+            <tr>
+                <td align="center">end</td>
+                <td>可选，结束时间。</td>
+            </tr>
+            <tr>
+                <td align="center">url</td>
+                <td>可选，当指定后，事件被点击将打开对应url。</td>
+            </tr>
+            <tr>
+                <td align="center">className</td>
+                <td>指定事件的样式。</td>
+            </tr>
+            <tr>
+                <td align="center">editable</td>
+                <td>事件是否可编辑，可编辑是指可以移动, 改变大小等。</td>
+            </tr>
+            <tr>
+                <td align="center">source</td>
+                <td>指向次event的eventsource对象。</td>
+            </tr>
+            <tr>
+                <td align="center">color</td>
+                <td>背景和边框颜色。</td>
+            </tr>
+            <tr>
+                <td align="center">backgroundColor</td>
+                <td>背景颜色。</td>
+            </tr>
+            <tr>
+                <td align="center">borderColor</td>
+                <td>边框颜色。</td>
+            </tr>
+            <tr>
+                <td align="center">textColor</td>
+                <td>文本颜色。</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <label style="color: #e66b6b;">3、其他方法：</label>
+    // 获取日程对象
+    var curObj = $("#calendar").fullCalendar('clientEvents', id)[0];
+    // 添加日程
+    $("#calendar").fullCalendar('renderEvent', obj);
+    // 更新日程
+    $("#calendar").fullCalendar('updateEvent', curObj);
+    // 删除日程
+    $("#calendar").fullCalendar('removeEvents', id);
+</pre>
+<script type="text/javascript" src="/plugIn/dateTime/fullcalendar/moment.min.js"></script>
+<script type="text/javascript" src="/plugIn/dateTime/fullcalendar/fullcalendar.js?v=2017041305"></script>
+<script>
+    /*<![CDATA[*/
+    setTimeout(function() {
+        $("#calendar").fullCalendar({ // 初始化日历控件
+            header: {
+                left: "prev,next today", // 翻页+今天
+                center:"title",
+                right:"month,agendaWeek,agendaDay,listMonth,listWeek,listDay"
+            },
+            // defaultView: "listDay", // 设置初始化视图，默认'month'
+            weekNumbers: true, // 是否在日历中显示周次
+            weekNumbersWithinDays: true, // 月视图中显示周数的样式
+            weekNumberCalculation: "ISO", // 周次的显示格式
+            showNonCurrentDates:true, // 不属于本月的天是否样式是否一致
+            fixedWeekCount:false, // 是否固定月视图中的周数为6周
+            nowIndicator:true, // 是否显示指示当前时间的标记
+            navLinks: true,//允许周、日点击跳转不同视图
+            editable: true,//允许拖拽和改变日程区间
+            eventDurationEditable: false,//允许改变日程区间
+            eventLimit: false, //显示更多按钮
+            slotEventOverlap:false,//周/日视图上的事件不会重叠显示
+            timeFormat: "HH:mm:ss", // 设置每个事件的时间格式
+            axisFormat: "HH:mm:ss", // 时间轴的时间格式
+            height: $(window).height()-166, // 日历控件的高度
+            loading: function(bool) { // 当获取数据开始和结束的时候触发
+            },
+            // 日程数据加载
+            events: function(start, end, timezone, callback) {
+    //             $.ajax({
+    //                 type: "POST",
+    //                 data: {},
+    //                 url: "schedule.json",
+    //                 dataType: "json",
+    //                 timeout : 60000,
+    //                 success: function(msg){
+                        var myDate = new Date();
+                        var curMonth = myDate.getMonth()+1;
+                        var startTime = myDate.getFullYear() + "-" + (curMonth > 9 ? curMonth : ("0" + curMonth))  + "-"
+                                + (myDate.getDate() > 9 ? myDate.getDate() : ("0" +myDate.getDate())) + " 00:00:00";
+                                debugger;
+                        var events = [{"id": "1", "title": "上山打老虎", "start": startTime, "end": myDate.Format("yyyy-MM-dd hh:mm:ss")}];
+                        // 初始化日程数据
+                        callback(events);
+    //                 },
+    //                 error: function(xml, mess){
+    //                     alertCountDown(5,"通讯失败，请重试！");
+    //                 }
+    //             });
+            },
+            // 鼠标悬停日程事件
+            eventMouseover: function( event, jsEvent, view ) {
+             $(this).css('background-color', '#00bcd4');
+            },
+            // 鼠标移开日程事件
+            eventMouseout: function( event, jsEvent, view ) {
+             $(this).css('background-color', '#1caf9a');
+            },
+            // 点击添加日程（select方法可替代）
+    //         dayClick: function(date, jsEvent, view) {
+    //             alert("您点击了这一天：" + date);
+    //         },
+            // 日程点击事件
+            eventClick: function(obj, jsEvent, view) {
+             alert("您点击了这个日程，id为：" + obj.id);
+            },
+            // 跨时间选择配置项
+            selectable: true, // 是否允许用户单击或者拖拽日历中的天和时间隙
+            selectHelper: true, // 设置是否在用户拖拽事件的时候绘制占位符
+            select: function(start, end) { // 在日历中选择某个时间之后触发该回调函数
+                alert("您选择的时间段是：" + start + "到" + end);
+            },
+            // 当拖拽完成并且时间改变时触发
+            eventDrop: function(obj, delta, revertFunc, jsEvent, ui, view ) {
+                if(!confirm('确定要调整此日程？')) {
+                 revertFunc();
+                }
+            }
+        });
+    }, 100);
+    /*]]>*/
+</script>

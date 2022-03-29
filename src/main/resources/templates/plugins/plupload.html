@@ -1,0 +1,213 @@
+<!-- 文件上传模态框 -->
+<div class="modal fade bs-example-modal-sm" id="uploadImgModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="uploadImgLabel" aria-hidden="true">
+ <div class="modal-dialog modal-sm">
+     <div class="modal-content">
+         <div class="modal-body " id="uInfoImgUploadStateBox">
+             <div id="fileList"></div>
+         </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-defult btn-sm" data-dismiss="modal">取消</button>
+             <button type="button" class="btn btn-danger btn-sm" id="start_upload">开始上传</button>
+         </div>
+     </div>
+ </div>
+</div>
+<label class="title f18">一、展示效果</label>
+<div class="viewContent">
+    <!-- 选择文件按钮 -->
+    <button type="button" class="btn btn-success" id="browse"><i class="fa fa-cloud-upload mr5"></i>请选择要上传的文件</button>
+</div>
+<label class="title f18">二、HTML代码</label>
+<pre>
+    &lt;!-- 文件上传模态框 --&gt;
+    &lt;div class="modal fade bs-example-modal-sm" id="uploadImgModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="uploadImgLabel" aria-hidden="true"&gt;
+        &lt;div class="modal-dialog modal-sm"&gt;
+            &lt;div class="modal-content"&gt;
+                &lt;div class="modal-body " id="uInfoImgUploadStateBox"&gt;
+                    &lt;div id="fileList"&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class="modal-footer"&gt;
+                    &lt;button type="button" class="btn btn-defult btn-sm" data-dismiss="modal"&gt;取消&lt;/button&gt;
+                    &lt;button type="button" class="btn btn-danger btn-sm" id="start_upload"&gt;开始上传&lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+</pre>
+<label class="title f18">三、引入js文件</label>
+<pre>
+    &lt;script type="text/javascript" src="${Env.global_static_url}/plugIn/plupload-3.1.2/plupload.full.min.js?v=${Env.global_js_version!}"&gt;&lt;/script&gt;
+</pre>
+<label class="title f18">四、用法（参考网站：<a target="_blank" href="http://chaping.github.io/plupload/doc/">http://chaping.github.io/plupload/doc/</a>）</label>
+<pre>
+    var uploader;
+    uploader = new plupload.Uploader({
+        multipart_params: {
+            operate: "upload",
+            other: "aaaaa"},
+        file_data_name: "",
+        browse_button: 'browse', //触发文件选择对话框的按钮，为那个元素id
+        url: '/pmWholeProjectManageUpload' //服务器端的上传页面地址
+    });
+    inintUpload();
+    
+    /**
+     * 初始化pluploader以及绑定一些必要的监控事件
+     */
+    function inintUpload() {
+        // plupload初始化
+        uploader.init();
+     
+        // 绑定添加文件事件
+        uploader.bind('FilesAdded',function(uploader,files){
+            $('#uploadImgModal').modal('show');
+            for (var file of files) {
+                var fileHtml = "&lt;div id=" + file.id + " class='fileBox'&gt;" + "&lt;p&gt;" + file.name + "（" + byteToKM(file.size) + "）" + "&lt;i class='fa fa-times fr' onclick='removeWaitFile(\"" + file.id + "\")'&gt;&lt;/p&gt;"
+                + "&lt;div class='progress'&gt;&lt;div class='progress-bar' role='progressbar' aria-valuemin='0' aria-valuemax='100' style='width: 0%;'&gt;&lt;/div&gt;&lt;/div&gt;";
+                $('#fileList').append(fileHtml);
+            }
+         });
+        
+        // 绑定上传进度事件
+        uploader.bind('UploadProgress',function(uploader,file){
+            $('#' + file.id).find('.progress-bar').width(file.percent + '%');
+            $('#' + file.id).find('.progress-bar').text(file.percent + '%');
+        });
+        
+        // 绑定一个文件上传成功事件
+        uploader.bind('FileUploaded', function(uploader, file, response) {
+            console.log(file.name + "上传完成--" + response);
+        });
+        
+        // 绑定所有文件上传成功事件
+        uploader.bind('UploadComplete', function(uploader, files) {
+            $('#uploadImgModal').modal('hide'); // 关闭模态框
+        });
+    }
+    
+    // 绑定文件上传模态框关闭事件（关闭模态框的时候清除所有的待上传文件）
+    $('#uploadImgModal').on('hidden.bs.modal', function() {
+        if (uploader.files.length != 0) {
+            uploader.splice(0, uploader.files.length);
+        }
+        uploader.stop();
+        $('.fileBox').remove();
+        $('#start_upload').prop('disabled', false);
+    });
+    
+    // 绑定开始上传按钮点击事件
+    $('#start_upload').on('click', function() {
+        uploader.start(); //调用实例对象的start()方法开始上传文件，当然你也可以在其他地方调用该方法
+        $(this).prop('disabled', true);
+    });
+    
+    /**
+     * 移除上传队列中的文件
+     */
+    function removeWaitFile(fileId) {
+        uploader.removeFile(fileId);
+        $('#' + fileId).remove();
+        // 若全部移除则自动关闭模态框
+        if (uploader.files.length == 0) {
+            $('#uploadImgModal').modal('hide');
+        }
+    }
+    
+    /**
+     * 字节转换为KB或者MB
+     */
+    function byteToKM(bNumber) {
+        if (bNumber >= 1048576) { // 以MB为单位
+            return (bNumber / 1048576).toFixed(2) + 'M';
+        } else { // 以KB为单位
+            return (bNumber / 1024).toFixed(2) + 'K';
+        }
+    }
+</pre>
+<script type="text/javascript" src="/plugIn/plupload-3.1.2/plupload.full.min.js"></script>
+<script>
+	/*<![CDATA[*/
+	var uploader;
+	uploader = new plupload.Uploader({
+	    multipart_params: {
+	        operate: "upload",
+	        other: "aaaaa"},
+	    file_data_name: "",
+	    browse_button: 'browse', //触发文件选择对话框的按钮，为那个元素id
+// 	    url: '/pmWholeProjectManageUpload' //服务器端的上传页面地址
+	});
+	inintUpload();
+	
+	/**
+	 * 初始化pluploader以及绑定一些必要的监控事件
+	 */
+	function inintUpload() {
+	    // plupload初始化
+	    uploader.init();
+		// 绑定添加文件事件
+		uploader.bind('FilesAdded',function(uploader,files){
+			$('#uploadImgModal').modal('show');
+			for (var file of files) {
+				var fileHtml = "<div id=" + file.id + " class='fileBox'>" + "<p>" + file.name + "（" + byteToKM(file.size) + "）" + "<i class='fa fa-times fr' onclick='removeWaitFile(\"" + file.id + "\")'></p>"
+				+ "<div class='progress'><div class='progress-bar' role='progressbar' aria-valuemin='0' aria-valuemax='100' style='width: 0%;'></div></div>";
+				$('#fileList').append(fileHtml);
+			}
+		 });
+		
+		// 绑定上传进度事件
+		uploader.bind('UploadProgress',function(uploader,file){
+			$('#' + file.id).find('.progress-bar').width(file.percent + '%');
+			$('#' + file.id).find('.progress-bar').text(file.percent + '%');
+		});
+		
+		// 绑定一个文件上传成功事件
+		uploader.bind('FileUploaded', function(uploader, file, response) {
+		    console.log(file.name + "上传完成--" + response);
+		});
+		
+		// 绑定所有文件上传成功事件
+		uploader.bind('UploadComplete', function(uploader, files) {
+		    $('#uploadImgModal').modal('hide'); // 关闭模态框
+		});
+	}
+	
+	// 绑定文件上传模态框关闭事件（关闭模态框的时候清除所有的待上传文件）
+	$('#uploadImgModal').on('hidden.bs.modal', function() {
+	    if (uploader.files.length != 0) {
+	        uploader.splice(0, uploader.files.length);
+	    }
+		uploader.refresh();
+	    $('.fileBox').remove();
+		$('#start_upload').prop('disabled', false);
+	});
+	
+	// 绑定开始上传按钮点击事件
+	$('#start_upload').on('click', function() {
+	    uploader.start(); //调用实例对象的start()方法开始上传文件，当然你也可以在其他地方调用该方法
+	    $(this).prop('disabled', true);
+	});
+	
+	/**
+	 * 移除上传队列中的文件
+	 */
+	function removeWaitFile(fileId) {
+	    uploader.removeFile(fileId);
+	    $('#' + fileId).remove();
+	    // 若全部移除则自动关闭模态框
+	    if (uploader.files.length == 0) {
+	        $('#uploadImgModal').modal('hide');
+	    }
+	}
+	
+	/**
+	 * 字节转换为KB或者MB
+	 */
+	function byteToKM(bNumber) {
+	    if (bNumber >= 1048576) { // 以MB为单位
+	        return (bNumber / 1048576).toFixed(2) + 'M';
+	    } else { // 以KB为单位
+	        return (bNumber / 1024).toFixed(2) + 'K';
+	    }
+	}
+	/*]]>*/
+</script>

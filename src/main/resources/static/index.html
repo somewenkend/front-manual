@@ -1,0 +1,17 @@
+<div style="padding: 15px 30px;">
+	<h3 id="getRowData" class="mb15">一、关于jqgrid取行数据</h3>
+	<div class="pl15 remark">
+		<p class="fb f16">取行数据有两种方法：</p>
+		<p class="pl15">1、getRowData()：获取表格行渲染后的数据。</p>
+		<p class="pl15">2、getLocalRow()：获取表格行原始数据。</p>
+		<p class="fb f16">使用场合：</p>
+	    <p class="pl15">1、若是前台分页，两种方法都可以用。但是使用getLocalRow()方法时，要求数据中有不重复的id字段，若没有id字段，可将某一主键字段列中添加配置"key": true,则此字段可作为id使用。</p>
+	    <p class="pl15">2、若后台分页，只可以用getRowData()方法。若想使用未被渲染的数据，可使用隐藏列。</p>
+	    <p class="pl15">添加一个列，设置属性为隐藏，format返回行数据字符串：{"label": "", "name": "relationStoreInState", "sortable": false, "hidedlg": true, "hidden": true, "formatter":function(cellValue, options, data){
+			return JSON.stringify(data);
+		}</p>
+		<p class="pl15">取值的方法：</p>
+		<p class="pl15">先取得渲染后的行数据：var rowData = $(this).getRowData(rowid);</p>
+		<p class="pl15">那么真实行数据就是：realData =  JSON.parse(rowData.relationStoreInState);</p>
+	</div>
+</div>
